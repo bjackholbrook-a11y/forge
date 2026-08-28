@@ -1,0 +1,12 @@
+{
+  "name": "forge",
+  "version": "2.1.2",
+  "description": "Forge — diet & fitness tracker by Modern Hobbit",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
