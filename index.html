@@ -248,6 +248,11 @@ input.wt{border-color:var(--accent)}
 .ver{font-family:var(--font-data);font-size:9px;color:var(--text3);letter-spacing:1px}
 html.theme-light .wm-dark{display:none}
 html.theme-dark .wm-light{display:none}
+
+/* pill tabs (food picker: staples vs search) */
+.pill-tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:var(--r-pill);width:fit-content}
+.pt{font-family:var(--font-body);font-size:14px;font-weight:600;padding:7px 16px;border-radius:var(--r-pill);color:var(--text2);cursor:pointer;user-select:none}
+.pt.on{background:var(--accent);color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -256,7 +261,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v2.1.2</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v2.2.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -1540,33 +1545,168 @@ async function delFoodLog(id){
   await loadAll();active='food';render();
 }
 
-/* --- food picker (choose a staple + qty, or a one-off) --- */
+/* --- food picker (staples tab + USDA search tab) --- */
 let foodQuery='';
-function openFoodPicker(){foodQuery='';renderFoodPicker();}
+let pickerTab='staples';         // 'staples' | 'search'
+let usdaQuery='', usdaResults=[], usdaState='idle', usdaErr='';  // idle|loading|done|error
+function openFoodPicker(){foodQuery='';usdaQuery='';usdaResults=[];usdaState='idle';usdaErr='';pickerTab='staples';renderFoodPicker();}
+function switchPickerTab(t){pickerTab=t;renderFoodPicker();}
 function renderFoodPicker(){
   let m=E('foodpicker');
   if(!m){m=document.createElement('div');m.id='foodpicker';m.className='modal';document.body.appendChild(m);}
-  const q=foodQuery.toLowerCase().trim();
-  let list=FOODS.filter(f=>!q||f.name.toLowerCase().includes(q));
-  let body=list.map(f=>`<button class="pk-item" onclick="pickFood('${f.id}')">
-    <span>${f.name}</span><span class="pk-inc">${Math.round(Number(f.calories)||0)} cal</span></button>`).join('');
-  const showOneOff=q.length>0;
+  const tabs=`<div class="pill-tabs" style="margin:0 16px 4px">
+    <div class="pt ${pickerTab==='staples'?'on':''}" onclick="switchPickerTab('staples')">My staples</div>
+    <div class="pt ${pickerTab==='search'?'on':''}" onclick="switchPickerTab('search')">Search foods</div>
+  </div>`;
+  let head, listBody;
+  if(pickerTab==='staples'){
+    const q=foodQuery.toLowerCase().trim();
+    const list=FOODS.filter(f=>!q||f.name.toLowerCase().includes(q));
+    const body=list.map(f=>`<button class="pk-item" onclick="pickFood('${f.id}')">
+      <span>${f.name}</span><span class="pk-inc">${Math.round(Number(f.calories)||0)} cal</span></button>`).join('');
+    const showOneOff=q.length>0;
+    head=`<input type="text" id="fp_search" placeholder="Search your staples…" value="${foodQuery}" autocomplete="off">`;
+    listBody=`${showOneOff?`<button class="pk-item custom" onclick="oneOffFromQuery()">＋ Log “${escAttr(foodQuery.trim())}” as one-off (enter nutrients)</button>`:''}
+      ${body||'<div class="pk-empty">No staples match. Define one, or log a one-off above.</div>'}`;
+  }else{
+    head=`<input type="text" id="fp_usda" placeholder="Search foods (e.g. chicken breast)…" value="${escAttr(usdaQuery)}" autocomplete="off" enterkeyhint="search">`;
+    listBody=renderUsdaBody();
+  }
   m.innerHTML=`<div class="modal-bg" onclick="closeFoodPicker()"></div>
     <div class="modal-card">
       <div class="pk-head">
-        <input type="text" id="fp_search" placeholder="Search your staples…" value="${foodQuery}" autocomplete="off">
+        ${head}
         <button class="pk-close" onclick="closeFoodPicker()">✕</button>
       </div>
-      <div class="pk-list">
-        ${showOneOff?`<button class="pk-item custom" onclick="oneOffFromQuery()">＋ Log “${foodQuery.trim()}” as one-off (enter nutrients)</button>`:''}
-        ${body||'<div class="pk-empty">No staples match. Define one, or log a one-off above.</div>'}
-      </div>
+      ${tabs}
+      <div class="pk-list" id="pk_list">${listBody}</div>
     </div>`;
-  const si=E('fp_search');
-  si.oninput=()=>{foodQuery=si.value;const p=si.selectionStart;renderFoodPicker();const n=E('fp_search');n.focus();n.setSelectionRange(p,p);};
-  si.focus();
+  if(pickerTab==='staples'){
+    const si=E('fp_search');
+    si.oninput=()=>{foodQuery=si.value;const p=si.selectionStart;renderFoodPicker();const n=E('fp_search');if(n){n.focus();n.setSelectionRange(p,p);}};
+    si.focus();
+  }else{
+    const si=E('fp_usda');
+    si.oninput=()=>{usdaQuery=si.value;};
+    si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runUsdaSearch();}};
+    si.focus();si.setSelectionRange(si.value.length,si.value.length);
+  }
+}
+function renderUsdaBody(){
+  if(usdaState==='idle')return `<div class="pk-empty">Type a food and press search (or Enter).<br><button class="btn" style="margin-top:14px;max-width:200px" onclick="runUsdaSearch()">Search USDA</button></div>`;
+  if(usdaState==='loading')return `<div class="pk-empty">Searching USDA…</div>`;
+  if(usdaState==='error')return `<div class="pk-empty">⚠ ${escHtml(usdaErr||'Search failed')}.<br><button class="btn ghost" style="margin-top:12px;max-width:160px" onclick="runUsdaSearch()">Try again</button></div>`;
+  if(!usdaResults.length)return `<div class="pk-empty">No matches for “${escHtml(usdaQuery)}”.</div>`;
+  return usdaResults.map((f,i)=>{
+    const n=f.nutrients||{};
+    const per=f.per==='serving'&&f.householdServing?f.householdServing:(f.per==='serving'?`${f.servingSize||''}${f.servingUnit||''}`:'100g');
+    const brand=f.brand?` · ${escHtml(f.brand)}`:'';
+    return `<button class="pk-item" onclick="pickUsda(${i})" style="flex-direction:column;align-items:flex-start;gap:4px">
+      <span style="font-weight:600">${escHtml(f.name)}</span>
+      <span class="pk-inc">${Math.round(n.calories||0)} cal · ${Math.round(n.protein||0)}g P · ${Math.round(n.carbs||0)}g C · ${Math.round(n.fat||0)}g F <span style="opacity:.7">/ ${escHtml(per)}</span>${brand}</span>
+    </button>`;
+  }).join('');
+}
+async function runUsdaSearch(){
+  const q=(usdaQuery||'').trim();
+  if(!q){usdaState='idle';renderFoodPicker();return;}
+  usdaState='loading';renderFoodPicker();
+  try{
+    const r=await fetch('/api/food-search?q='+encodeURIComponent(q));
+    const data=await r.json();
+    if(!r.ok||data.error){usdaState='error';usdaErr=data.error||('HTTP '+r.status);renderFoodPicker();return;}
+    usdaResults=data.foods||[];usdaState='done';renderFoodPicker();
+  }catch(err){usdaState='error';usdaErr=String(err&&err.message||err);renderFoodPicker();}
 }
 function closeFoodPicker(){const m=E('foodpicker');if(m)m.remove();}
+function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function escAttr(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+/* --- USDA result → confirm serving → log --- */
+let usdaPick=null, usdaMult=1;
+function pickUsda(i){
+  usdaPick=usdaResults[i]; if(!usdaPick)return;
+  // Default multiplier: whole foods are per-100g (default to 100g -> mult 1 means "100g").
+  // For per-serving (branded), mult 1 = one serving.
+  usdaMult=1;
+  renderUsdaConfirm();
+}
+function renderUsdaConfirm(){
+  let m=E('usdaconfirm');
+  if(!m){m=document.createElement('div');m.id='usdaconfirm';m.className='modal';document.body.appendChild(m);}
+  const f=usdaPick; const n=f.nutrients||{};
+  const per100 = f.per==='100g';
+  // The "amount" the user is entering:
+  //  - per-100g foods: grams (default 100)
+  //  - per-serving foods: number of servings (default 1)
+  const amount = per100 ? Math.round(usdaMult*100) : usdaMult;
+  const scaled = {}; visKeys().forEach(k=>{ scaled[k]=round1((n[k]||0)*usdaMult); });
+  const servingLabel = per100
+    ? `grams (USDA data is per 100g)`
+    : (f.householdServing ? `servings — 1 = ${escHtml(f.householdServing)}` : `servings (1 = ${f.servingSize||''}${f.servingUnit||''})`);
+  const vis=visibleNutrients();
+  const macroLine = vis.filter(nn=>nn.k!=='calories').map(nn=>`${scaled[nn.k]!=null?Math.round(scaled[nn.k]):0}${nn.unit} ${nn.label.toLowerCase()}`).join(' · ');
+  m.innerHTML=`<div class="modal-bg" onclick="closeUsdaConfirm()"></div>
+    <div class="modal-card">
+      <div class="pk-head"><b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px">${escHtml(f.name)}</b>
+        <button class="pk-close" onclick="closeUsdaConfirm()">✕</button></div>
+      <div class="pk-list">
+        <div class="profilefield">
+          <label>${per100?'Amount in grams':'How many servings'}</label>
+          <input type="number" inputmode="decimal" id="uc_amt" value="${amount}" style="font-size:20px">
+          <div class="daymeta" style="text-transform:none;letter-spacing:0;margin-top:6px">${escHtml(servingLabel)}</div>
+        </div>
+        <div class="ringcard" style="text-align:left;padding:14px 16px">
+          <div class="dc-big" id="uc_cal">${Math.round(scaled.calories||0)}<span style="font-size:15px;color:var(--text2)"> cal</span></div>
+          <div class="dc-sub" id="uc_macros">${macroLine}</div>
+        </div>
+        <button class="btn" onclick="logUsda(false)">Log it</button>
+        <button class="btn ghost" onclick="logUsda(true)">Log &amp; save as staple</button>
+      </div>
+    </div>`;
+  const amt=E('uc_amt');
+  amt.oninput=()=>{
+    const v=Number(amt.value)||0;
+    usdaMult = per100 ? v/100 : v;
+    // live-update the preview without full re-render (keeps focus)
+    const sc={}; visKeys().forEach(k=>{sc[k]=round1((n[k]||0)*usdaMult);});
+    E('uc_cal').innerHTML=`${Math.round(sc.calories||0)}<span style="font-size:15px;color:var(--text2)"> cal</span>`;
+    E('uc_macros').textContent=vis.filter(nn=>nn.k!=='calories').map(nn=>`${Math.round(sc[nn.k]||0)}${nn.unit} ${nn.label.toLowerCase()}`).join(' · ');
+  };
+  amt.focus();amt.select();
+}
+function closeUsdaConfirm(){const m=E('usdaconfirm');if(m)m.remove();}
+function visKeys(){return NUTRIENTS.map(n=>n.k);}
+function round1(v){return Math.round((Number(v)||0)*10)/10;}
+
+async function logUsda(alsoSaveStaple){
+  const f=usdaPick; if(!f)return;
+  const n=f.nutrients||{};
+  // Build a food-like object with SCALED nutrients, qty=1 (already scaled).
+  const scaled={ name:f.name, source:'usda' };
+  NUTRIENTS.forEach(nn=>{ scaled[nn.k]=round1((n[nn.k]||0)*usdaMult); });
+
+  if(alsoSaveStaple){
+    // Save an unscaled-per-"one serving" staple: store what the user configured as one serving.
+    const per100=f.per==='100g';
+    const servingTxt = per100 ? `${Math.round(usdaMult*100)} g` : (f.householdServing||`${f.servingSize||''}${f.servingUnit||''}`);
+    const stapleRow={ user_id:user.id, name:f.name, serving:servingTxt, source:'usda', archived:false };
+    NUTRIENTS.forEach(nn=>{ stapleRow[nn.k]=round1((n[nn.k]||0)*usdaMult); });
+    const {data,error}=await sb.from('foods').insert(stapleRow).select().maybeSingle();
+    if(error){toast('⚠ staple not saved: '+error.message);}
+    else{ toast('Saved staple'); if(data)scaled.food_id=data.id; }
+  }
+
+  // Log it for today (qty 1 because nutrients already scaled).
+  const row={ user_id:user.id, date:foodToday(), food_id:scaled.food_id||null, name:f.name, meal_slot:null, qty:1, source:'usda' };
+  NUTRIENTS.forEach(nn=>{ row[nn.k]=scaled[nn.k]!=null?scaled[nn.k]:null; });
+  const {error}=await sb.from('food_log').insert(row);
+  if(error){toast('⚠ NOT saved: '+error.message);return;}
+  toast(`Logged ${f.name}`);
+  closeUsdaConfirm();closeFoodPicker();
+  await loadAll();active='food';render();
+}
+
 async function pickFood(id){
   const f=FOODS.find(x=>x.id===id);if(!f){closeFoodPicker();return}
   const qty=prompt(`How many servings of ${f.name}?`,'1');
@@ -1598,7 +1738,7 @@ function renderStapleEditor(f){
     <input type="number" inputmode="decimal" id="sf_${n.k}" value="${f[n.k]!=null?f[n.k]:''}" placeholder="—"></div>`).join('');
   m.innerHTML=`<div class="modal-bg" onclick="closeStapleEditor()"></div>
     <div class="modal-card">
-      <div class="pk-head"><b style="font-family:'Fraunces',serif;font-size:18px">${title}</b>
+      <div class="pk-head"><b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px">${title}</b>
         <button class="pk-close" onclick="closeStapleEditor()">✕</button></div>
       <div class="pk-list">
         <div class="profilefield"><label>Name</label><input type="text" id="sf_name" value="${(f.name||'').replace(/"/g,'&quot;')}" placeholder="e.g. PB sandwich"></div>
