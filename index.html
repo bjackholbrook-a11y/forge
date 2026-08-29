@@ -266,6 +266,13 @@ html.theme-dark .wm-light{display:none}
 .authdivider{display:flex;align-items:center;gap:12px;margin:18px 0 10px;color:var(--text3);font-size:13px}
 .authdivider:before,.authdivider:after{content:'';flex:1;height:1px;background:var(--line)}
 .btn.ghost.demo-btn{border:1.5px solid var(--accent);color:var(--accent);font-weight:700;background:transparent}
+
+/* bodyweight badge in place of the weight field */
+.setweight.bw{max-width:none;width:auto}
+.bwbadge{display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:1px;
+  background:var(--surface2);border:1.5px solid var(--line);color:var(--text2);
+  border-radius:var(--r-input);padding:11px 18px}
 </style>
 </head>
 <body>
@@ -274,7 +281,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v2.3.0</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v2.4.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -533,6 +540,32 @@ async function loadAll(){
 
 /* ============ GLOBAL PROGRESSION ============ */
 // increment: per-exercise step (defaults to global INC=5). Deload rounds down to that step.
+
+/* ---- exercise load types ----
+   normal     : stack/plate weight. Earn = add weight.
+   assisted   : COUNTERWEIGHT (assisted dip/pull-up). More weight = more help.
+                Earn = SUBTRACT weight. Deload = ADD weight. Floor at 0.
+   bodyweight : no external load. Progression on reps only.            */
+function exLoadType(name){
+  for(const day of ['a','b','c']){
+    const ex=EX[day].find(e=>e.name===name);
+    if(ex&&ex.load_type)return ex.load_type;
+  }
+  // Fallback for exercises not yet migrated: infer from the name.
+  if(/assisted/i.test(name))return 'assisted';
+  return 'normal';
+}
+function isAssisted(name){return exLoadType(name)==='assisted';}
+function isBodyweight(name){return exLoadType(name)==='bodyweight';}
+
+// Assisted deload = MORE assistance (weight goes UP ~10%, rounded to a step).
+function assistDeloadWeight(w,inc){
+  const step=inc||INC;
+  let c=Math.ceil((w/DELOAD)/step)*step;   // w/0.9 -> ~+11%
+  if(c<=w)c=w+step;
+  return c;
+}
+
 function deloadWeight(w,inc){
   const step=inc||INC;
   let c=Math.floor(w*DELOAD/step)*step;
@@ -548,17 +581,48 @@ function exIncrement(name){
   return INC;
 }
 function progression(name){
+  const lt=exLoadType(name);
+
+  // --- BODYWEIGHT: no external load. Track reps only. ---
+  if(lt==='bodyweight'){
+    const bh=LIFTS.filter(l=>l.name===name)
+      .map(l=>({total:(l.s1||0)+(l.s2||0)+(l.s3||0)})).filter(h=>h.total>0);
+    if(!bh.length)return null;
+    const lastTotal=bh[0].total;
+    return {
+      state: lastTotal>=PASS_TOTAL ? 'bw-up' : 'bw-hold',
+      suggest: null,          // no weight to suggest
+      total: lastTotal, strikes: 0, loadType: 'bodyweight'
+    };
+  }
+
   const hist=LIFTS.filter(l=>l.name===name&&l.weight!=null).map(l=>({w:Number(l.weight),total:(l.s1||0)+(l.s2||0)+(l.s3||0)})).filter(h=>h.total>0);
   if(!hist.length)return null;
   const inc=exIncrement(name);
   const last=hist[0];
-  if(last.total>=PASS_TOTAL)return{state:'up',suggest:last.w+inc,total:last.total,strikes:0};
+  const assisted=(lt==='assisted');
+
+  // --- EARNED PROGRESSION ---
+  if(last.total>=PASS_TOTAL){
+    if(assisted){
+      // Less assistance = harder = progress. Floor at 0 (= bodyweight).
+      const next=Math.max(0,last.w-inc);
+      return {state:'up',suggest:next,total:last.total,strikes:0,loadType:'assisted',
+              graduated: next===0};
+    }
+    return{state:'up',suggest:last.w+inc,total:last.total,strikes:0,loadType:lt};
+  }
+
+  // --- STRIKES / DELOAD ---
   let strikes=1;
   for(let i=1;i<hist.length;i++){
     if(hist[i].w===last.w&&hist[i].total<PASS_TOTAL)strikes++;else break;
   }
-  if(strikes>=STRIKES)return{state:'deload',suggest:deloadWeight(last.w,inc),total:last.total,strikes};
-  return{state:'hold',suggest:last.w,total:last.total,strikes};
+  if(strikes>=STRIKES){
+    const back = assisted ? assistDeloadWeight(last.w,inc) : deloadWeight(last.w,inc);
+    return{state:'deload',suggest:back,total:last.total,strikes,loadType:lt};
+  }
+  return{state:'hold',suggest:last.w,total:last.total,strikes,loadType:lt};
 }
 
 /* ============ RENDER ============ */
@@ -829,9 +893,21 @@ function dayView(day){
     const inc=ex.increment!=null?Number(ex.increment):INC;
     let badge='';
     if(!editMode&&prog){
-      if(prog.state==='up')badge=`<span class="last">▲ ${prog.suggest} lbs — earned</span>`;
-      else if(prog.state==='deload')badge=`<span class="last" style="color:var(--rust)">▼ deload to ${prog.suggest} lbs</span>`;
-      else badge=`<span class="last" style="color:var(--muted)">hold ${prog.suggest} (${prog.total}/${PASS_TOTAL} · strike ${prog.strikes}/${STRIKES})</span>`;
+      const _asst=(prog.loadType==='assisted');
+      if(prog.state==='bw-up')badge=`<span class="last">▲ earned — add reps (${prog.total}/${PASS_TOTAL})</span>`;
+      else if(prog.state==='bw-hold')badge=`<span class="last" style="color:var(--muted)">bodyweight (${prog.total}/${PASS_TOTAL})</span>`;
+      else if(prog.state==='up'){
+        // For assisted, LESS weight is progress — show a down arrow but style it as earned.
+        badge = _asst
+          ? `<span class="last">▼ ${prog.suggest} lbs assist — earned${prog.graduated?' · bodyweight!':''}</span>`
+          : `<span class="last">▲ ${prog.suggest} lbs — earned</span>`;
+      }
+      else if(prog.state==='deload'){
+        badge = _asst
+          ? `<span class="last" style="color:var(--warn)">▲ more assist: ${prog.suggest} lbs</span>`
+          : `<span class="last" style="color:var(--warn)">▼ deload to ${prog.suggest} lbs</span>`;
+      }
+      else badge=`<span class="last" style="color:var(--text2)">hold ${prog.suggest} (${prog.total}/${PASS_TOTAL} · strike ${prog.strikes}/${STRIKES})</span>`;
     }
     let warmRow='';
     if(ex.warmup&&!editMode){
@@ -863,15 +939,21 @@ function dayView(day){
             <option value="false" ${!ex.warmup?'selected':''}>off</option>
             <option value="true" ${ex.warmup?'selected':''}>on</option>
           </select></div>
-        <div class="field" style="flex:2"><label>&nbsp;</label><div class="daymeta" style="padding-top:9px">step & warm-up config</div></div>
+        <div class="field"><label>Load type</label>
+          <select id="lt_${i}" onchange="setLoadType('${day.id}',${i},this.value)">
+            ${[['normal','Weight'],['assisted','Assist'],['bodyweight','Body wt']]
+              .map(([v,lab])=>`<option value="${v}" ${ (ex.load_type||'normal')===v ?'selected':''}>${lab}</option>`).join('')}
+          </select></div>
       </div>`:''}
       ${warmRow}
       <div class="setblock">
-        <div class="setweight">
-          <label>Weight</label>
-          <input class="wt" type="number" inputmode="decimal" id="w_${i}" value="${prog?prog.suggest:''}" placeholder="—">
-          <span class="setweight-unit">lbs</span>
-        </div>
+        ${isBodyweight(ex.name)
+          ? `<div class="setweight bw"><span class="bwbadge">BW</span><input type="hidden" id="w_${i}" value=""></div>`
+          : `<div class="setweight">
+              <label>${isAssisted(ex.name)?'Assist':'Weight'}</label>
+              <input class="wt" type="number" inputmode="decimal" id="w_${i}" value="${prog&&prog.suggest!=null?prog.suggest:''}" placeholder="—">
+              <span class="setweight-unit">lbs</span>
+            </div>`}
         <div class="setcircles" id="sc_${i}">
           ${[1,2,3].map(sn=>`<button type="button" class="setc" id="scbtn_${i}_${sn}"
               onpointerdown="scPress(${i},${sn})" onpointerup="scRelease(${i},${sn})" onpointerleave="scCancel()"
@@ -890,6 +972,17 @@ function dayView(day){
   h+=`<button class="btn ghost" onclick="toggleEditKeep()">${editMode?'Done editing':'Edit exercise list & increments'}</button>`;
   h+=historyView(day.id);
   return h;
+}
+
+
+async function setLoadType(dayId,i,val){
+  const ex=EX[dayId][i];ex.load_type=val;
+  const {error}=await sb.from('exercises').update({load_type:val}).eq('id',ex.id);
+  if(error){toast('⚠ '+error.message);return;}
+  toast(val==='assisted'?'Assisted: less weight = progress'
+       :val==='bodyweight'?'Bodyweight: tracking reps'
+       :'Normal weight progression');
+  render();
 }
 
 async function setIncrement(dayId,i,val){
