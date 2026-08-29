@@ -1,0 +1,9 @@
+{
+  "name": "Tracker — Modern Hobbit",
+  "short_name": "Tracker",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#1F261E",
+  "theme_color": "#1F261E",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
