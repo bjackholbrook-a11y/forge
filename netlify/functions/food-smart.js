@@ -182,19 +182,20 @@ function looseEq(a, b) {
   return a.startsWith(b) || b.startsWith(a);
 }
 function isRelevant(item, candidateName) {
-  const want = relTokens(`${item.brand || ''} ${item.name}`);
+  const want = [...new Set(relTokens(`${item.brand || ''} ${item.name}`))];
   if (!want.length) return true;
   const got = relTokens(candidateName);
   const gotSet = new Set(got);
-  const hits = want.filter((w) => gotSet.has(w) || got.some((g) => looseEq(w, g)));
-  // Need MORE than half the meaningful words. (At exactly half, "chicken
-  // breast" would wrongly accept "chicken nuggets".)
+  const present = (w) => gotSet.has(w) || got.some((g) => looseEq(w, g));
+  const hits = want.filter(present);
   if (hits.length / want.length < 0.6) return false;
-  // If a brand was named, the brand's main word must be present — otherwise
-  // "Jet's Pizza" can match a random product that merely says "pizza".
+
+  // If a brand was named, EVERY word of the brand must appear. Requiring only
+  // "some" lets a generic word carry the match: "Jet's Pizza" -> [jet, pizza],
+  // and "Pizza Hut Pepperoni Pizza" satisfies "pizza" while missing "jet".
   if (item.brand) {
-    const brandWords = relTokens(item.brand);
-    if (brandWords.length && !brandWords.some((b) => gotSet.has(b))) return false;
+    const brandWords = [...new Set(relTokens(item.brand))];
+    if (brandWords.length && !brandWords.every(present)) return false;
   }
   return true;
 }
