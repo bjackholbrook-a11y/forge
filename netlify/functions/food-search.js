@@ -53,6 +53,7 @@ exports.handler = async (event) => {
       + `&pageNumber=${page}`
       + '&dataType=Foundation,SR%20Legacy,Branded';
 
+    const offPromise = page === 1 ? offSearch(q) : Promise.resolve([]);
     const resp = await fetch(url);
     if (!resp.ok) {
       const text = await resp.text();
@@ -104,6 +105,14 @@ exports.handler = async (event) => {
     const totalHits = Number(data.totalHits || 0);
     const hasMore = totalHits > page * 50;
 
+    let off = [];
+    try { off = await offPromise; } catch { off = []; }
+    const offRanked = off
+      .map((f) => ({ ...f, _score: scoreMatch(f.name, 'OpenFoodFacts', terms) }))
+      .sort((a, b) => b._score - a._score)
+      .slice(0, 10);
+    offRanked.forEach((f) => { delete f._score; });
+
     return { statusCode: 200, headers, body: JSON.stringify({
       query: q,
       page,
@@ -113,6 +122,7 @@ exports.handler = async (event) => {
       groups: [
         { label: 'Whole foods', items: whole },
         { label: 'Branded products', items: branded },
+        { label: 'Open Food Facts', items: offRanked },
       ].filter((g) => g.items.length),
       foods, // flat list kept for backward compatibility
     }) };
@@ -134,6 +144,48 @@ const SYNONYMS = {
   'ground': ['ground'],
   'breast': ['breast'],
 };
+
+
+// Open Food Facts — free, no key, strong on packaged/branded groceries where
+// USDA's branded coverage is thin. Queried in parallel with USDA.
+async function offSearch(q) {
+  const url = 'https://world.openfoodfacts.org/cgi/search.pl'
+    + `?search_terms=${encodeURIComponent(q)}`
+    + '&search_simple=1&action=process&json=1&page_size=10'
+    + '&fields=code,product_name,brands,serving_size,nutriments,url';
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': 'Forge/1.0 (Modern Hobbit)' } });
+    if (!r.ok) return [];
+    const data = await r.json();
+    return (data.products || []).map((p) => {
+      const nm = p.nutriments || {};
+      if (!p.product_name) return null;
+      const useServing = nm['energy-kcal_serving'] != null;
+      const pick = (base) => round((useServing ? nm[`${base}_serving`] : nm[`${base}_100g`]) || 0);
+      const n = {
+        calories: round((useServing ? nm['energy-kcal_serving'] : nm['energy-kcal_100g']) || 0),
+        protein: pick('proteins'), carbs: pick('carbohydrates'), fat: pick('fat'),
+        fiber: pick('fiber'), sat_fat: pick('saturated-fat'), added_sugar: pick('sugars'),
+        sodium: round(((useServing ? nm.sodium_serving : nm.sodium_100g) || 0) * 1000),
+        potassium: round(((useServing ? nm.potassium_serving : nm.potassium_100g) || 0) * 1000),
+        cholesterol: round(((useServing ? nm.cholesterol_serving : nm.cholesterol_100g) || 0) * 1000),
+      };
+      if (!n.calories && !n.protein && !n.carbs && !n.fat) return null;
+      const brand = (p.brands || '').split(',')[0].trim();
+      return {
+        fdcId: 'off-' + (p.code || Math.random().toString(36).slice(2)),
+        name: cleanName(brand ? `${brand} ${p.product_name}` : p.product_name),
+        brand: brand || null,
+        dataType: 'OpenFoodFacts',
+        servingSize: null, servingUnit: null,
+        householdServing: useServing ? (p.serving_size || null) : null,
+        per: useServing ? 'serving' : '100g',
+        nutrients: n,
+        sourceUrl: p.url || null,
+      };
+    }).filter(Boolean);
+  } catch { return []; }
+}
 
 function tokenize(s) {
   return String(s).toLowerCase()
