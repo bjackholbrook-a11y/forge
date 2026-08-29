@@ -160,6 +160,45 @@ Rules:
   })).filter((x) => x.name);
 }
 
+
+/* ---------- relevance guard ----------
+   Structured DBs happily return loose matches ("Jet's Pizza pepperoni slice"
+   -> "Gummi Jets"). A tier-1 hit only counts if the candidate actually shares
+   enough of the query's meaningful words — otherwise we return null so the
+   escalation tiers get their turn. */
+const REL_STOP = new Set(['a','an','the','of','with','and','or','in','on','slice','slices',
+                          'piece','pieces','serving','servings','order','side']);
+function relTokens(s) {
+  return String(s || '').toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w.length > 2 && !REL_STOP.has(w));
+}
+// "egg" should match "eggs" but NOT "eggplant". Only allow a length difference
+// of 2 or less, which covers plurals and simple inflections.
+function looseEq(a, b) {
+  if (a === b) return true;
+  if (Math.abs(a.length - b.length) > 2) return false;
+  return a.startsWith(b) || b.startsWith(a);
+}
+function isRelevant(item, candidateName) {
+  const want = relTokens(`${item.brand || ''} ${item.name}`);
+  if (!want.length) return true;
+  const got = relTokens(candidateName);
+  const gotSet = new Set(got);
+  const hits = want.filter((w) => gotSet.has(w) || got.some((g) => looseEq(w, g)));
+  // Need MORE than half the meaningful words. (At exactly half, "chicken
+  // breast" would wrongly accept "chicken nuggets".)
+  if (hits.length / want.length < 0.6) return false;
+  // If a brand was named, the brand's main word must be present — otherwise
+  // "Jet's Pizza" can match a random product that merely says "pizza".
+  if (item.brand) {
+    const brandWords = relTokens(item.brand);
+    if (brandWords.length && !brandWords.some((b) => gotSet.has(b))) return false;
+  }
+  return true;
+}
+
 /* ---------- Tier 1: USDA ---------- */
 async function usdaLookup(item, usdaKey) {
   const q = item.brand ? `${item.brand} ${item.name}` : item.name;
@@ -174,7 +213,7 @@ async function usdaLookup(item, usdaKey) {
     data = await r.json();
   } catch { return null; }
 
-  const f = (data.foods || [])[0];
+  const f = (data.foods || []).find((x) => x && x.description && isRelevant(item, x.description));
   if (!f) return null;
 
   const nutrients = blank();
@@ -212,7 +251,11 @@ async function offLookup(item) {
     data = await r.json();
   } catch { return null; }
 
-  const p = (data.products || []).find((x) => x && x.nutriments && x.product_name);
+  const p = (data.products || []).find((x) => {
+    if (!x || !x.nutriments || !x.product_name) return false;
+    const brand = (x.brands || '').split(',')[0].trim();
+    return isRelevant(item, `${brand} ${x.product_name}`);
+  });
   if (!p) return null;
   const nm = p.nutriments || {};
 
