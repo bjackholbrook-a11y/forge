@@ -1895,13 +1895,15 @@ async function delFoodLog(id){
 let foodQuery='';
 let pickerTab='staples';         // 'staples' | 'search'
 let usdaQuery='', usdaResults=[], usdaGroups=null, usdaState='idle', usdaErr='';
-let usdaWhole=[], usdaBranded=[], usdaOff=[], usdaPage=0, usdaHasMore=false, usdaLoadingMore=false;  // idle|loading|done|error
+let usdaWhole=[], usdaBranded=[], usdaOff=[], usdaPage=0, usdaHasMore=false, usdaLoadingMore=false, usdaAdded=0;  // idle|loading|done|error
 function openFoodPicker(){foodQuery='';usdaQuery='';usdaResults=[];usdaGroups=null;usdaState='idle';usdaErr='';
   usdaWhole=[];usdaBranded=[];usdaOff=[];usdaPage=0;usdaHasMore=false;usdaLoadingMore=false;
   smartText='';smartItems=[];smartState='idle';smartErr='';smartAllow=[];
   pickerTab='staples';renderFoodPicker();}
 function switchPickerTab(t){pickerTab=t;renderFoodPicker();}
 function renderFoodPicker(){
+  const _prevList=E('pk_list');
+  const _prevScroll=_prevList?_prevList.scrollTop:0;
   let m=E('foodpicker');
   if(!m){m=document.createElement('div');m.id='foodpicker';m.className='modal';document.body.appendChild(m);}
   const tabs=`<div class="pill-tabs" style="margin:0 16px 4px">
@@ -1935,6 +1937,8 @@ function renderFoodPicker(){
       ${tabs}
       <div class="pk-list" id="pk_list">${listBody}</div>
     </div>`;
+  const _newList=E('pk_list');
+  if(_newList&&_prevScroll)_newList.scrollTop=_prevScroll;
   if(pickerTab==='staples'){
     const si=E('fp_search');
     si.oninput=()=>{foodQuery=si.value;const p=si.selectionStart;renderFoodPicker();const n=E('fp_search');if(n){n.focus();n.setSelectionRange(p,p);}};
@@ -1983,7 +1987,7 @@ function renderUsdaBody(){
   }
   out+=`<div class="pk-more">`;
   if(usdaLoadingMore)out+=`<div class="pk-empty" style="padding:12px 0">Loading more…</div>`;
-  else if(usdaHasMore)out+=`<button class="btn ghost" onclick="runUsdaSearch(true)">Show more results</button>`;
+  else if(usdaHasMore)out+=`<button class="btn ghost" onclick="runUsdaSearch(true)">Show more results</button><div class="pk-empty" style="padding:8px 0 0;font-style:normal;font-size:12px">${usdaResults.length} shown</div>`;
   else out+=`<div class="pk-empty" style="padding:12px 0;font-style:normal;font-size:13px">That's everything USDA has for “${escHtml(usdaQuery)}”.</div>`;
   out+=`</div>`;
   return out;
@@ -2010,7 +2014,15 @@ async function runUsdaSearch(more){
     o.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaOff.push(x);seen.add(String(x.fdcId));}});
     usdaPage=data.page||nextPage;
     usdaHasMore=!!data.hasMore;
+    const before=usdaResults.length;
     usdaResults=usdaWhole.concat(usdaBranded,usdaOff);
+    usdaAdded=usdaResults.length-before;
+    if(more&&usdaAdded===0){
+      // USDA says there are more hits, but this page produced nothing new after
+      // ranking/dedupe. Try one more page before telling the user we're done.
+      if(usdaHasMore&&usdaPage<6){usdaLoadingMore=false;return runUsdaSearch(true);}
+      usdaHasMore=false;
+    }
     usdaState='done';usdaLoadingMore=false;renderFoodPicker();
   }catch(err){usdaState='error';usdaErr=String(err&&err.message||err);usdaLoadingMore=false;renderFoodPicker();}
 }
