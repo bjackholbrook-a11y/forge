@@ -302,6 +302,29 @@ html.theme-dark .wm-light{display:none}
 .exrow.skipped .setcircles,.exrow.skipped .setweight,.exrow.skipped .fields.warmup{pointer-events:none;filter:grayscale(1)}
 .skiptag{font-family:var(--font-data);font-size:10px;color:var(--warn);border:1px solid var(--warn);
   border-radius:4px;padding:1px 5px;text-transform:uppercase;letter-spacing:1px}
+
+/* smart food cards */
+.smartcard{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-input);
+  padding:14px;margin-bottom:8px}
+.smartcard.est{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent)}
+.smartcard.missing{opacity:.65}
+.sc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.sc-name{font-weight:700;font-size:16px;flex:1}
+.sc-sub{font-family:var(--font-body);font-size:13px;color:var(--text2);margin-top:3px}
+.sc-macros{font-family:var(--font-data);font-size:14px;color:var(--text);margin-top:8px;font-weight:500}
+.sc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.sc-src{font-family:var(--font-body);font-size:12px;color:var(--accent);text-decoration:none;font-weight:600}
+.sc-src.plain{color:var(--text3);font-weight:500}
+.sc-log{background:var(--accent);color:var(--accent-ink);border:none;border-radius:var(--r-pill);
+  font-family:var(--font-display);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.5px;
+  padding:7px 18px;cursor:pointer}
+.conf{font-family:var(--font-body);font-size:11px;font-weight:700;border-radius:var(--r-pill);
+  padding:3px 9px;white-space:nowrap}
+.conf-verified{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.conf-published{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.conf-estimated{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.escalate{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.esc-head{font-family:var(--font-body);font-size:14px;color:var(--text2);margin-bottom:10px;font-weight:600}
 </style>
 </head>
 <body>
@@ -310,7 +333,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v2.8.0</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v3.0.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -1872,17 +1895,19 @@ async function delFoodLog(id){
 let foodQuery='';
 let pickerTab='staples';         // 'staples' | 'search'
 let usdaQuery='', usdaResults=[], usdaGroups=null, usdaState='idle', usdaErr='';
-let usdaWhole=[], usdaBranded=[], usdaPage=0, usdaHasMore=false, usdaLoadingMore=false;  // idle|loading|done|error
+let usdaWhole=[], usdaBranded=[], usdaOff=[], usdaPage=0, usdaHasMore=false, usdaLoadingMore=false;  // idle|loading|done|error
 function openFoodPicker(){foodQuery='';usdaQuery='';usdaResults=[];usdaGroups=null;usdaState='idle';usdaErr='';
-  usdaWhole=[];usdaBranded=[];usdaPage=0;usdaHasMore=false;usdaLoadingMore=false;
+  usdaWhole=[];usdaBranded=[];usdaOff=[];usdaPage=0;usdaHasMore=false;usdaLoadingMore=false;
+  smartText='';smartItems=[];smartState='idle';smartErr='';smartAllow=[];
   pickerTab='staples';renderFoodPicker();}
 function switchPickerTab(t){pickerTab=t;renderFoodPicker();}
 function renderFoodPicker(){
   let m=E('foodpicker');
   if(!m){m=document.createElement('div');m.id='foodpicker';m.className='modal';document.body.appendChild(m);}
   const tabs=`<div class="pill-tabs" style="margin:0 16px 4px">
-    <div class="pt ${pickerTab==='staples'?'on':''}" onclick="switchPickerTab('staples')">My staples</div>
-    <div class="pt ${pickerTab==='search'?'on':''}" onclick="switchPickerTab('search')">Search foods</div>
+    <div class="pt ${pickerTab==='staples'?'on':''}" onclick="switchPickerTab('staples')">Staples</div>
+    <div class="pt ${pickerTab==='search'?'on':''}" onclick="switchPickerTab('search')">Search</div>
+    <div class="pt ${pickerTab==='smart'?'on':''}" onclick="switchPickerTab('smart')">Describe</div>
   </div>`;
   let head, listBody;
   if(pickerTab==='staples'){
@@ -1894,9 +1919,12 @@ function renderFoodPicker(){
     head=`<input type="text" id="fp_search" placeholder="Search your staples…" value="${foodQuery}" autocomplete="off">`;
     listBody=`${showOneOff?`<button class="pk-item custom" onclick="oneOffFromQuery()">＋ Log “${escAttr(foodQuery.trim())}” as one-off (enter nutrients)</button>`:''}
       ${body||'<div class="pk-empty">No staples match. Define one, or log a one-off above.</div>'}`;
-  }else{
+  }else if(pickerTab==='search'){
     head=`<input type="text" id="fp_usda" placeholder="Search foods (e.g. chicken breast)…" value="${escAttr(usdaQuery)}" autocomplete="off" enterkeyhint="search">`;
     listBody=renderUsdaBody();
+  }else{
+    head=`<input type="text" id="fp_smart" placeholder="e.g. two eggs and a tortilla" value="${escAttr(smartText)}" autocomplete="off" enterkeyhint="go">`;
+    listBody=renderSmartBody();
   }
   m.innerHTML=`<div class="modal-bg" onclick="closeFoodPicker()"></div>
     <div class="modal-card">
@@ -1911,11 +1939,18 @@ function renderFoodPicker(){
     const si=E('fp_search');
     si.oninput=()=>{foodQuery=si.value;const p=si.selectionStart;renderFoodPicker();const n=E('fp_search');if(n){n.focus();n.setSelectionRange(p,p);}};
     si.focus();
-  }else{
+  }else if(pickerTab==='search'){
     const si=E('fp_usda');
     si.oninput=()=>{usdaQuery=si.value;};
     si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runUsdaSearch();}};
     si.focus();si.setSelectionRange(si.value.length,si.value.length);
+  }else{
+    const si=E('fp_smart');
+    if(si){
+      si.oninput=()=>{smartText=si.value;};
+      si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runSmart();}};
+      si.focus();si.setSelectionRange(si.value.length,si.value.length);
+    }
   }
 }
 
@@ -1942,6 +1977,10 @@ function renderUsdaBody(){
     out+=`<div class="pk-cat">Branded products</div>`;
     out+=usdaBranded.map(f=>usdaCard(f)).join('');
   }
+  if(usdaOff.length){
+    out+=`<div class="pk-cat">Open Food Facts</div>`;
+    out+=usdaOff.map(f=>usdaCard(f)).join('');
+  }
   out+=`<div class="pk-more">`;
   if(usdaLoadingMore)out+=`<div class="pk-empty" style="padding:12px 0">Loading more…</div>`;
   else if(usdaHasMore)out+=`<button class="btn ghost" onclick="runUsdaSearch(true)">Show more results</button>`;
@@ -1952,7 +1991,7 @@ function renderUsdaBody(){
 async function runUsdaSearch(more){
   const q=(usdaQuery||'').trim();
   if(!q){usdaState='idle';renderFoodPicker();return;}
-  if(!more){ usdaWhole=[];usdaBranded=[];usdaPage=0;usdaHasMore=false; usdaState='loading'; }
+  if(!more){ usdaWhole=[];usdaBranded=[];usdaOff=[];usdaPage=0;usdaHasMore=false; usdaState='loading'; }
   else { usdaLoadingMore=true; }
   renderFoodPicker();
   const nextPage=usdaPage+1;
@@ -1963,19 +2002,134 @@ async function runUsdaSearch(more){
     const gs=data.groups||[];
     const w=(gs.find(g=>/whole/i.test(g.label))||{items:[]}).items||[];
     const b=(gs.find(g=>/branded/i.test(g.label))||{items:[]}).items||[];
+    const o=(gs.find(g=>/open food facts/i.test(g.label))||{items:[]}).items||[];
     // append, de-duplicating by fdcId
-    const seen=new Set(usdaWhole.concat(usdaBranded).map(x=>String(x.fdcId)));
+    const seen=new Set(usdaWhole.concat(usdaBranded,usdaOff).map(x=>String(x.fdcId)));
     w.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaWhole.push(x);seen.add(String(x.fdcId));}});
     b.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaBranded.push(x);seen.add(String(x.fdcId));}});
+    o.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaOff.push(x);seen.add(String(x.fdcId));}});
     usdaPage=data.page||nextPage;
     usdaHasMore=!!data.hasMore;
-    usdaResults=usdaWhole.concat(usdaBranded);
+    usdaResults=usdaWhole.concat(usdaBranded,usdaOff);
     usdaState='done';usdaLoadingMore=false;renderFoodPicker();
   }catch(err){usdaState='error';usdaErr=String(err&&err.message||err);usdaLoadingMore=false;renderFoodPicker();}
 }
 function closeFoodPicker(){const m=E('foodpicker');if(m)m.remove();}
 function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 function escAttr(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+
+/* ============ SMART FOOD (natural language + tiered sourcing) ============
+   Verified USDA data comes back by default. Escalating to brand-published or
+   estimated numbers is an explicit opt-in, so soft data is never logged by
+   accident. Every item shows where its numbers came from.              */
+let smartText='', smartItems=[], smartState='idle', smartErr='', smartAllow=[];
+
+function switchPickerTabSmartReset(){ smartItems=[];smartState='idle';smartErr='';smartAllow=[]; }
+
+async function runSmart(extraAllow){
+  const t=(smartText||'').trim();
+  if(!t){smartState='idle';renderFoodPicker();return;}
+  if(extraAllow&&!smartAllow.includes(extraAllow))smartAllow=smartAllow.concat([extraAllow]);
+  smartState='loading';renderFoodPicker();
+  try{
+    const r=await fetch('/api/food-smart',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text:t,allow:smartAllow})
+    });
+    const data=await r.json();
+    if(!r.ok||data.error){smartState='error';smartErr=data.error||('HTTP '+r.status);renderFoodPicker();return;}
+    smartItems=data.items||[];smartState='done';renderFoodPicker();
+  }catch(err){smartState='error';smartErr=String(err&&err.message||err);renderFoodPicker();}
+}
+
+function confBadge(conf){
+  if(conf==='verified') return `<span class="conf conf-verified">USDA verified</span>`;
+  if(conf==='published')return `<span class="conf conf-published">Published</span>`;
+  if(conf==='estimated')return `<span class="conf conf-estimated">~ Estimated</span>`;
+  return '';
+}
+
+function renderSmartBody(){
+  if(smartState==='idle')return `<div class="pk-empty" style="text-align:left;font-style:normal">
+      Describe what you ate in plain words — “two eggs and a tortilla”, “6oz chicken and rice”.
+      <div style="margin-top:14px"><button class="btn" onclick="runSmart()">Look it up</button></div>
+      <div style="margin-top:12px;font-size:13px;color:var(--text3)">Checks USDA first. You choose whether to go further.</div>
+    </div>`;
+  if(smartState==='loading')return `<div class="pk-empty">Reading that…</div>`;
+  if(smartState==='error')return `<div class="pk-empty">⚠ ${escHtml(smartErr||'Lookup failed')}.
+      <div style="margin-top:12px"><button class="btn ghost" style="max-width:160px" onclick="runSmart()">Try again</button></div></div>`;
+  if(!smartItems.length)return `<div class="pk-empty">Didn't recognise any food in that.</div>`;
+
+  let out='';
+  smartItems.forEach((it,i)=>{
+    if(!it.found){
+      out+=`<div class="smartcard missing">
+        <div class="sc-name">${escHtml(it.name)}</div>
+        <div class="sc-sub">No verified data found.</div>
+      </div>`;
+      return;
+    }
+    const n=it.nutrients||{};
+    const q=it.qty||1;
+    const src=it.source_url
+      ? `<a class="sc-src" href="${escAttr(it.source_url)}" target="_blank" rel="noopener">${escHtml(it.source_label||'source')} ↗</a>`
+      : `<span class="sc-src plain">${escHtml(it.source_label||'')}</span>`;
+    out+=`<div class="smartcard ${it.confidence==='estimated'?'est':''}">
+      <div class="sc-top">
+        <div class="sc-name">${escHtml(it.name)}</div>
+        ${confBadge(it.confidence)}
+      </div>
+      <div class="sc-sub">${q>1?q+' × ':''}${escHtml(it.serving||'1 serving')}</div>
+      <div class="sc-macros">${Math.round((n.calories||0)*q)} cal · ${Math.round((n.protein||0)*q)}g P · ${Math.round((n.carbs||0)*q)}g C · ${Math.round((n.fat||0)*q)}g F</div>
+      <div class="sc-foot">${src}<button class="sc-log" onclick="logSmartItem(${i})">Log</button></div>
+    </div>`;
+  });
+
+  // Escalation offers — only for what's still missing, and only opt-in.
+  const missing=smartItems.filter(x=>!x.found).length;
+  if(missing){
+    out+=`<div class="escalate">
+      <div class="esc-head">${missing} item${missing>1?'s':''} not in USDA.</div>`;
+    if(!smartAllow.includes('published'))
+      out+=`<button class="btn ghost" onclick="runSmart('published')">Check the brand's website</button>`;
+    if(smartAllow.includes('published')&&!smartAllow.includes('estimated'))
+      out+=`<button class="btn ghost" onclick="runSmart('estimated')">Estimate it instead</button>`;
+    if(smartAllow.includes('published')&&smartAllow.includes('estimated'))
+      out+=`<div class="pk-empty" style="font-size:13px;font-style:normal">Nothing found, even estimating. Try the Search tab or add it manually.</div>`;
+    out+=`</div>`;
+  }
+  if(smartItems.filter(x=>x.found).length>1){
+    out+=`<button class="btn" style="margin-top:10px" onclick="logAllSmart()">Log all ${smartItems.filter(x=>x.found).length} items</button>`;
+  }
+  return out;
+}
+
+async function logSmartItem(i){
+  const it=smartItems[i];
+  if(!it||!it.found)return;
+  const ok=await saveSmartItem(it);
+  if(ok){toast(`Logged ${it.name}`);smartItems.splice(i,1);
+    if(!smartItems.length){closeFoodPicker();await loadAll();active='food';render();}
+    else renderFoodPicker();}
+}
+async function logAllSmart(){
+  const found=smartItems.filter(x=>x.found);
+  let n=0;
+  for(const it of found){ if(await saveSmartItem(it))n++; }
+  toast(`Logged ${n} item${n===1?'':'s'}`);
+  closeFoodPicker();await loadAll();active='food';render();
+}
+async function saveSmartItem(it){
+  const n=it.nutrients||{};const q=it.qty||1;
+  const row={user_id:user.id,date:foodToday(),name:it.name,qty:1,
+    source:it.confidence==='verified'?'usda':'smart',
+    confidence:it.confidence||null,source_url:it.source_url||null};
+  NUTRIENTS.forEach(nn=>{ row[nn.k]=Math.round(((n[nn.k]||0)*q)*10)/10; });
+  const {error}=await sb.from('food_log').insert(row);
+  if(error){toast('⚠ NOT saved: '+error.message);return false;}
+  return true;
+}
 
 /* --- USDA result → confirm serving → log --- */
 let usdaPick=null, usdaMult=1;
