@@ -1,2 +1,15 @@
+# Netlify configuration for Forge
+# This tells Netlify: the site's files are in the repo root, and serverless
+# functions live in netlify/functions. With this file committed, functions
+# deploy reliably (no dashboard fiddling needed).
+
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+# Let the browser call functions at a clean path: /api/food-search
+# instead of /.netlify/functions/food-search
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
