@@ -36,7 +36,9 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: 'USDA_API_KEY not set in Netlify environment.' }) };
   }
 
-  const q = ((event.queryStringParameters && event.queryStringParameters.q) || '').trim();
+  const qs = event.queryStringParameters || {};
+  const q = (qs.q || '').trim();
+  const page = Math.max(1, parseInt(qs.page || '1', 10) || 1);
   if (!q) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing search query (?q=).' }) };
   }
@@ -48,6 +50,7 @@ exports.handler = async (event) => {
       + `?api_key=${encodeURIComponent(key)}`
       + `&query=${encodeURIComponent(q)}`
       + '&pageSize=50'
+      + `&pageNumber=${page}`
       + '&dataType=Foundation,SR%20Legacy,Branded';
 
     const resp = await fetch(url);
@@ -88,15 +91,24 @@ exports.handler = async (event) => {
 
     // Sort by our relevance score (high to low).
     foods.sort((a, b) => b._score - a._score);
-    foods = foods.slice(0, 25);
-
-    // Group: whole foods first, branded second. Each group stays score-sorted.
-    const whole   = foods.filter((f) => f.dataType !== 'Branded');
-    const branded = foods.filter((f) => f.dataType === 'Branded');
+    // Split FIRST, then take the best of each group. Cutting globally would let
+    // whole foods (which score higher by design) squeeze branded out entirely on
+    // common terms like "pizza".
+    const wholeAll   = foods.filter((f) => f.dataType !== 'Branded');
+    const brandedAll = foods.filter((f) => f.dataType === 'Branded');
+    const whole   = wholeAll.slice(0, 15);
+    const branded = brandedAll.slice(0, 10);
+    foods = whole.concat(branded);
     foods.forEach((f) => { delete f._score; });
+
+    const totalHits = Number(data.totalHits || 0);
+    const hasMore = totalHits > page * 50;
 
     return { statusCode: 200, headers, body: JSON.stringify({
       query: q,
+      page,
+      totalHits,
+      hasMore,
       count: foods.length,
       groups: [
         { label: 'Whole foods', items: whole },
@@ -108,6 +120,19 @@ exports.handler = async (event) => {
     return { statusCode: 500, headers,
       body: JSON.stringify({ error: 'Search failed', detail: String((err && err.message) || err) }) };
   }
+};
+
+// USDA uses its own controlled vocabulary. Users don't. Map common user
+// phrasings onto the words USDA actually puts in descriptions, so a query like
+// "chicken breast bone in" can match "breast, meat and skin".
+const SYNONYMS = {
+  'bone': ['skin'],            // USDA: "meat and skin" ~= bone-in/skin-on cuts
+  'bonein': ['skin'],
+  'boneless': ['meat'],        // USDA: "meat only"
+  'skinless': ['meat'],
+  'thigh': ['thigh'],
+  'ground': ['ground'],
+  'breast': ['breast'],
 };
 
 function tokenize(s) {
@@ -131,6 +156,12 @@ function scoreMatch(name, dataType, terms) {
   terms.forEach((t) => {
     if (wordSet.has(t)) { hits += 1; score += 12; }
     else if (lower.includes(t)) { hits += 1; score += 7; }   // substring (plurals etc.)
+    else {
+      // Partial credit when USDA's vocabulary differs from the user's
+      // ("bone in" -> USDA says "meat and skin").
+      const alts = SYNONYMS[t];
+      if (alts && alts.some((a) => wordSet.has(a))) { hits += 1; score += 5; }
+    }
   });
   if (terms.length && hits === terms.length) score += 30;    // ALL terms matched
 
