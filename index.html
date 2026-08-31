@@ -325,6 +325,34 @@ html.theme-dark .wm-light{display:none}
 .conf-estimated{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
 .escalate{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
 .esc-head{font-family:var(--font-body);font-size:14px;color:var(--text2);margin-bottom:10px;font-weight:600}
+
+/* food rows — flat list, source label per row */
+.foodrow{display:block;width:100%;text-align:left;background:var(--surface2);
+  border:1px solid var(--line);border-radius:var(--r-input);padding:13px 14px;margin-bottom:7px;cursor:pointer}
+.foodrow:hover{border-color:var(--accent)}
+.foodrow.est{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 7%,transparent)}
+.foodrow.web{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.fr-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.fr-name{font-weight:600;font-size:16px;color:var(--text);flex:1;line-height:1.3}
+.fr-macros{font-family:var(--font-data);font-size:13px;color:var(--text2);margin-top:6px}
+.fr-per{opacity:.7}
+.fp-status{font-family:var(--font-body);font-size:14px;color:var(--text2);
+  padding:12px 2px;display:flex;align-items:center;gap:8px}
+.fp-status:before{content:'';width:14px;height:14px;border:2px solid var(--line);
+  border-top-color:var(--accent);border-radius:50%;animation:fpspin .8s linear infinite}
+@keyframes fpspin{to{transform:rotate(360deg)}}
+.fp-count{font-family:var(--font-data);font-size:12px;color:var(--text3);text-align:center;margin-top:6px}
+.conf-off{background:color-mix(in srgb,var(--text2) 16%,transparent);color:var(--text2)}
+.conf-staple{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
+/* detail sheet */
+.fd-badge{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.fd-src{font-family:var(--font-body);font-size:13px;color:var(--accent);text-decoration:none;font-weight:600}
+.fd-src.plain{color:var(--text3);font-weight:500}
+.mealpick{display:flex;gap:6px;flex-wrap:wrap}
+.mp{flex:1 1 auto;background:var(--surface2);border:1px solid var(--line);color:var(--text2);
+  border-radius:var(--r-pill);font-family:var(--font-body);font-size:14px;font-weight:600;
+  padding:9px 12px;cursor:pointer}
+.mp.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -333,7 +361,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v3.0.1</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v3.1.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -1900,363 +1928,277 @@ async function delFoodLog(id){
   await loadAll();active='food';render();
 }
 
-/* --- food picker (staples tab + USDA search tab) --- */
-let foodQuery='';
-let pickerTab='staples';         // 'staples' | 'search'
-let usdaQuery='', usdaResults=[], usdaGroups=null, usdaState='idle', usdaErr='';
-let usdaWhole=[], usdaBranded=[], usdaOff=[], usdaPage=0, usdaHasMore=false, usdaLoadingMore=false, usdaAdded=0;  // idle|loading|done|error
-function openFoodPicker(){foodQuery='';usdaQuery='';usdaResults=[];usdaGroups=null;usdaState='idle';usdaErr='';
-  usdaWhole=[];usdaBranded=[];usdaOff=[];usdaPage=0;usdaHasMore=false;usdaLoadingMore=false;
-  smartText='';smartItems=[];smartState='idle';smartErr='';smartAllow=[];
-  pickerTab='staples';renderFoodPicker();}
-function switchPickerTab(t){pickerTab=t;renderFoodPicker();}
+
+function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));}
+function escAttr(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+/* ============ FOOD PICKER — one search, one list ============
+   Every row carries where its numbers came from. Databases answer instantly;
+   brand-website and estimate tiers are fetched separately and appended as they
+   arrive, so the slow paths never block the fast ones.                     */
+let fpQuery='';
+let fpRows=[];                 // flat, ordered, each with .source
+let fpState='idle';            // idle | loading | done | error
+let fpErr='';
+let fpPage=0, fpHasMore=false, fpMoreLoading=false;
+let fpAiState='';              // '' | 'web' | 'estimate' | 'done'
+let fpSeq=0;                   // guards against out-of-order responses
+
+function openFoodPicker(){
+  fpQuery='';fpRows=[];fpState='idle';fpErr='';
+  fpPage=0;fpHasMore=false;fpMoreLoading=false;fpAiState='';
+  renderFoodPicker();
+}
+function closeFoodPicker(){const m=E('foodpicker');if(m)m.remove();}
+
 function renderFoodPicker(){
-  const _prevList=E('pk_list');
-  const _prevScroll=_prevList?_prevList.scrollTop:0;
+  const prev=E('fp_list');
+  const scroll=prev?prev.scrollTop:0;
   let m=E('foodpicker');
   if(!m){m=document.createElement('div');m.id='foodpicker';m.className='modal';document.body.appendChild(m);}
-  const tabs=`<div class="pill-tabs" style="margin:0 16px 4px">
-    <div class="pt ${pickerTab==='staples'?'on':''}" onclick="switchPickerTab('staples')">Staples</div>
-    <div class="pt ${pickerTab==='search'?'on':''}" onclick="switchPickerTab('search')">Search</div>
-    <div class="pt ${pickerTab==='smart'?'on':''}" onclick="switchPickerTab('smart')">Describe</div>
-  </div>`;
-  let head, listBody;
-  if(pickerTab==='staples'){
-    const q=foodQuery.toLowerCase().trim();
-    const list=FOODS.filter(f=>!q||f.name.toLowerCase().includes(q));
-    const body=list.map(f=>`<button class="pk-item" onclick="pickFood('${f.id}')">
-      <span>${f.name}</span><span class="pk-inc">${Math.round(Number(f.calories)||0)} cal</span></button>`).join('');
-    const showOneOff=q.length>0;
-    head=`<input type="text" id="fp_search" placeholder="Search your staples…" value="${foodQuery}" autocomplete="off">`;
-    listBody=`${showOneOff?`<button class="pk-item custom" onclick="oneOffFromQuery()">＋ Log “${escAttr(foodQuery.trim())}” as one-off (enter nutrients)</button>`:''}
-      ${body||'<div class="pk-empty">No staples match. Define one, or log a one-off above.</div>'}`;
-  }else if(pickerTab==='search'){
-    head=`<input type="text" id="fp_usda" placeholder="Search foods (e.g. chicken breast)…" value="${escAttr(usdaQuery)}" autocomplete="off" enterkeyhint="search">`;
-    listBody=renderUsdaBody();
-  }else{
-    head=`<input type="text" id="fp_smart" placeholder="e.g. two eggs and a tortilla" value="${escAttr(smartText)}" autocomplete="off" enterkeyhint="go">`;
-    listBody=renderSmartBody();
-  }
   m.innerHTML=`<div class="modal-bg" onclick="closeFoodPicker()"></div>
     <div class="modal-card">
       <div class="pk-head">
-        ${head}
+        <input type="text" id="fp_q" placeholder="Search foods…" value="${escAttr(fpQuery)}"
+               autocomplete="off" enterkeyhint="search">
         <button class="pk-close" onclick="closeFoodPicker()">✕</button>
       </div>
-      ${tabs}
-      <div class="pk-list" id="pk_list">${listBody}</div>
+      <div class="pk-list" id="fp_list">${fpBody()}</div>
     </div>`;
-  const _newList=E('pk_list');
-  if(_newList&&_prevScroll)_newList.scrollTop=_prevScroll;
-  if(pickerTab==='staples'){
-    const si=E('fp_search');
-    si.oninput=()=>{foodQuery=si.value;const p=si.selectionStart;renderFoodPicker();const n=E('fp_search');if(n){n.focus();n.setSelectionRange(p,p);}};
-    si.focus();
-  }else if(pickerTab==='search'){
-    const si=E('fp_usda');
-    si.oninput=()=>{usdaQuery=si.value;};
-    si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runUsdaSearch();}};
+  const nl=E('fp_list');if(nl&&scroll)nl.scrollTop=scroll;
+  const si=E('fp_q');
+  if(si){
+    si.oninput=()=>{fpQuery=si.value;};
+    si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runFoodSearch();}};
     si.focus();si.setSelectionRange(si.value.length,si.value.length);
-  }else{
-    const si=E('fp_smart');
-    if(si){
-      si.oninput=()=>{smartText=si.value;};
-      si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runSmart();}};
-      si.focus();si.setSelectionRange(si.value.length,si.value.length);
-    }
   }
 }
 
-function usdaCard(f){
-  const n=f.nutrients||{};
-  const per=f.per==='serving'&&f.householdServing?f.householdServing:(f.per==='serving'?`${f.servingSize||''}${f.servingUnit||''}`:'100g');
-  const brand=f.brand?` · ${escHtml(f.brand)}`:'';
-  return `<button class="pk-item" onclick="pickUsdaId('${f.fdcId}')" style="flex-direction:column;align-items:flex-start;gap:4px">
-    <span style="font-weight:600">${escHtml(f.name)}</span>
-    <span class="pk-inc">${Math.round(n.calories||0)} cal · ${Math.round(n.protein||0)}g P · ${Math.round(n.carbs||0)}g C · ${Math.round(n.fat||0)}g F <span style="opacity:.7">/ ${escHtml(per)}</span>${brand}</span>
+function fpBody(){
+  // Before searching: saved staples + recents, so the common case is one tap.
+  if(fpState==='idle'){
+    let out='';
+    const staples=(FOODS||[]).slice(0,12);
+    if(staples.length){
+      out+=`<div class="pk-cat">Your foods</div>`;
+      out+=staples.map(f=>rowCard({
+        id:'staple-'+f.id, name:f.name, brand:null,
+        serving:f.serving||'1 serving', per:'serving',
+        nutrients:{calories:Number(f.calories)||0,protein:Number(f.protein)||0,
+                   carbs:Number(f.carbs)||0,fat:Number(f.fat)||0},
+        source:'staple', sourceLabel:'Saved', sourceUrl:null, _stapleId:f.id
+      })).join('');
+    }else{
+      out+=`<div class="pk-empty" style="font-style:normal">Search for a food to log it.</div>`;
+    }
+    return out;
+  }
+  if(fpState==='error')return `<div class="pk-empty">⚠ ${escHtml(fpErr||'Search failed')}
+      <div style="margin-top:12px"><button class="btn ghost" style="max-width:160px" onclick="runFoodSearch()">Try again</button></div></div>`;
+  if(fpState==='loading'&&!fpRows.length)return `<div class="pk-empty">Searching…</div>`;
+
+  let out='';
+  if(fpRows.length){
+    out+=fpRows.map(r=>rowCard(r)).join('');
+  }
+  // Progressive status for the slower tiers.
+  if(fpAiState==='web')out+=`<div class="fp-status">Checking the brand's website…</div>`;
+  else if(fpAiState==='estimate')out+=`<div class="fp-status">Estimating…</div>`;
+
+  if(!fpRows.length&&fpAiState==='done')
+    out+=`<div class="pk-empty">Nothing found for “${escHtml(fpQuery)}”.
+      <div style="margin-top:12px"><button class="btn ghost" style="max-width:200px" onclick="addManualFromQuery()">Enter it manually</button></div></div>`;
+
+  if(fpRows.length){
+    out+=`<div class="pk-more">`;
+    if(fpMoreLoading)out+=`<div class="pk-empty" style="padding:10px 0">Loading…</div>`;
+    else if(fpHasMore)out+=`<button class="btn ghost" onclick="runFoodSearch(true)">Show more</button>
+      <div class="fp-count">${fpRows.length} shown</div>`;
+    out+=`<button class="btn ghost" style="margin-top:8px" onclick="addManualFromQuery()">Enter manually</button></div>`;
+  }
+  return out;
+}
+
+/* one result row — the source label is the point */
+function rowCard(r){
+  const n=r.nutrients||{};
+  const per=r.per==='100g'?'100 g':(r.serving||'1 serving');
+  const brand=r.brand?` · ${escHtml(r.brand)}`:'';
+  const cls=r.source==='estimate'?'est':(r.source==='web'?'web':'');
+  return `<button class="foodrow ${cls}" onclick="openFoodDetail('${r.id}')">
+    <div class="fr-top">
+      <span class="fr-name">${escHtml(r.name)}</span>
+      ${srcBadge(r)}
+    </div>
+    <div class="fr-macros">${Math.round(n.calories||0)} cal · ${Math.round(n.protein||0)}g P · ${Math.round(n.carbs||0)}g C · ${Math.round(n.fat||0)}g F
+      <span class="fr-per">/ ${escHtml(per)}</span>${brand}</div>
   </button>`;
 }
-function renderUsdaBody(){
-  if(usdaState==='idle')return `<div class="pk-empty">Type a food and press search (or Enter).<br><button class="btn" style="margin-top:14px;max-width:200px" onclick="runUsdaSearch()">Search USDA</button></div>`;
-  if(usdaState==='loading')return `<div class="pk-empty">Searching USDA…</div>`;
-  if(usdaState==='error')return `<div class="pk-empty">⚠ ${escHtml(usdaErr||'Search failed')}.<br><button class="btn ghost" style="margin-top:12px;max-width:160px" onclick="runUsdaSearch()">Try again</button></div>`;
-  if(!usdaResults.length)return `<div class="pk-empty">No matches for “${escHtml(usdaQuery)}”.</div>`;
-  let out='';
-  if(usdaWhole.length){
-    out+=`<div class="pk-cat">Whole foods</div>`;
-    out+=usdaWhole.map(f=>usdaCard(f)).join('');
-  }
-  if(usdaBranded.length){
-    out+=`<div class="pk-cat">Branded products</div>`;
-    out+=usdaBranded.map(f=>usdaCard(f)).join('');
-  }
-  if(usdaOff.length){
-    out+=`<div class="pk-cat">Open Food Facts</div>`;
-    out+=usdaOff.map(f=>usdaCard(f)).join('');
-  }
-  out+=`<div class="pk-more">`;
-  if(usdaLoadingMore)out+=`<div class="pk-empty" style="padding:12px 0">Loading more…</div>`;
-  else if(usdaHasMore)out+=`<button class="btn ghost" onclick="runUsdaSearch(true)">Show more results</button><div class="pk-empty" style="padding:8px 0 0;font-style:normal;font-size:12px">${usdaResults.length} shown</div>`;
-  else out+=`<div class="pk-empty" style="padding:12px 0;font-style:normal;font-size:13px">That's everything USDA has for “${escHtml(usdaQuery)}”.</div>`;
-  out+=`</div>`;
-  return out;
+function srcBadge(r){
+  const map={
+    usda:['conf-verified','USDA verified'],
+    usda_branded:['conf-verified','USDA'],
+    off:['conf-off','Open Food Facts'],
+    staple:['conf-staple','Saved'],
+    web:['conf-published',r.sourceLabel||'Brand site'],
+    estimate:['conf-estimated','~ Estimate'],
+  };
+  const [cls,label]=map[r.source]||['conf-off',r.sourceLabel||''];
+  return `<span class="conf ${cls}">${escHtml(label)}</span>`;
 }
-async function runUsdaSearch(more){
-  const q=(usdaQuery||'').trim();
-  if(!q){usdaState='idle';renderFoodPicker();return;}
-  if(!more){ usdaWhole=[];usdaBranded=[];usdaOff=[];usdaPage=0;usdaHasMore=false; usdaState='loading'; }
-  else { usdaLoadingMore=true; }
+
+/* ---- the search itself ---- */
+async function runFoodSearch(more){
+  const q=(fpQuery||'').trim();
+  if(!q){fpState='idle';renderFoodPicker();return;}
+  const seq=++fpSeq;
+  if(!more){fpRows=[];fpPage=0;fpHasMore=false;fpAiState='';fpState='loading';}
+  else fpMoreLoading=true;
   renderFoodPicker();
-  const nextPage=usdaPage+1;
+
+  const next=fpPage+1;
   try{
-    const r=await fetch('/api/food-search?q='+encodeURIComponent(q)+'&page='+nextPage);
+    const r=await fetch('/api/food-db?q='+encodeURIComponent(q)+'&page='+next);
     const data=await r.json();
-    if(!r.ok||data.error){usdaState='error';usdaErr=data.error||('HTTP '+r.status);usdaLoadingMore=false;renderFoodPicker();return;}
-    const gs=data.groups||[];
-    const w=(gs.find(g=>/whole/i.test(g.label))||{items:[]}).items||[];
-    const b=(gs.find(g=>/branded/i.test(g.label))||{items:[]}).items||[];
-    const o=(gs.find(g=>/open food facts/i.test(g.label))||{items:[]}).items||[];
-    // append, de-duplicating by fdcId
-    const seen=new Set(usdaWhole.concat(usdaBranded,usdaOff).map(x=>String(x.fdcId)));
-    w.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaWhole.push(x);seen.add(String(x.fdcId));}});
-    b.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaBranded.push(x);seen.add(String(x.fdcId));}});
-    o.forEach(x=>{if(!seen.has(String(x.fdcId))){usdaOff.push(x);seen.add(String(x.fdcId));}});
-    usdaPage=data.page||nextPage;
-    usdaHasMore=!!data.hasMore;
-    const before=usdaResults.length;
-    usdaResults=usdaWhole.concat(usdaBranded,usdaOff);
-    usdaAdded=usdaResults.length-before;
-    if(more&&usdaAdded===0){
-      // USDA says there are more hits, but this page produced nothing new after
-      // ranking/dedupe. Try one more page before telling the user we're done.
-      if(usdaHasMore&&usdaPage<6){usdaLoadingMore=false;return runUsdaSearch(true);}
-      usdaHasMore=false;
-    }
-    usdaState='done';usdaLoadingMore=false;renderFoodPicker();
-  }catch(err){usdaState='error';usdaErr=String(err&&err.message||err);usdaLoadingMore=false;renderFoodPicker();}
+    if(seq!==fpSeq)return;                       // a newer search superseded this
+    if(!r.ok||data.error){fpState='error';fpErr=data.error||('HTTP '+r.status);fpMoreLoading=false;renderFoodPicker();return;}
+    const seen=new Set(fpRows.map(x=>x.id));
+    (data.items||[]).forEach(x=>{if(!seen.has(x.id)){fpRows.push(x);seen.add(x.id);}});
+    fpPage=data.page||next;
+    fpHasMore=!!data.hasMore;
+    fpState='done';fpMoreLoading=false;
+    renderFoodPicker();
+
+    // Nothing from the databases? Escalate automatically, without blocking.
+    if(!more&&!fpRows.length)escalate(q,seq);
+  }catch(err){
+    if(seq!==fpSeq)return;
+    fpState='error';fpErr=String(err&&err.message||err);fpMoreLoading=false;renderFoodPicker();
+  }
 }
-function closeFoodPicker(){const m=E('foodpicker');if(m)m.remove();}
-function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-function escAttr(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
+// Tier 2 then tier 3, each its own short request, appending as they land.
+async function escalate(q,seq){
+  fpAiState='web';renderFoodPicker();
+  const web=await aiLookup(q,'web');
+  if(seq!==fpSeq)return;
+  if(web){fpRows.push(web);fpAiState='done';renderFoodPicker();return;}
 
-/* ============ SMART FOOD (natural language + tiered sourcing) ============
-   Verified USDA data comes back by default. Escalating to brand-published or
-   estimated numbers is an explicit opt-in, so soft data is never logged by
-   accident. Every item shows where its numbers came from.              */
-let smartText='', smartItems=[], smartState='idle', smartErr='', smartAllow=[];
-
-function switchPickerTabSmartReset(){ smartItems=[];smartState='idle';smartErr='';smartAllow=[]; }
-
-async function runSmart(extraAllow){
-  const t=(smartText||'').trim();
-  if(!t){smartState='idle';renderFoodPicker();return;}
-  if(extraAllow&&!smartAllow.includes(extraAllow))smartAllow=smartAllow.concat([extraAllow]);
-  smartState='loading';renderFoodPicker();
+  fpAiState='estimate';renderFoodPicker();
+  const est=await aiLookup(q,'estimate');
+  if(seq!==fpSeq)return;
+  if(est)fpRows.push(est);
+  fpAiState='done';renderFoodPicker();
+}
+async function aiLookup(q,mode){
   try{
-    const r=await fetch('/api/food-smart',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({text:t,allow:smartAllow})
-    });
-    const data=await r.json();
-    if(!r.ok||data.error){smartState='error';smartErr=data.error||('HTTP '+r.status);renderFoodPicker();return;}
-    smartItems=data.items||[];smartState='done';renderFoodPicker();
-  }catch(err){smartState='error';smartErr=String(err&&err.message||err);renderFoodPicker();}
+    const r=await fetch('/api/food-ai',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:q,mode})});
+    const d=await r.json();
+    return (r.ok&&d.found&&d.item)?d.item:null;
+  }catch(e){return null;}
 }
 
-function confBadge(conf){
-  if(conf==='verified') return `<span class="conf conf-verified">USDA verified</span>`;
-  if(conf==='published')return `<span class="conf conf-published">Published</span>`;
-  if(conf==='estimated')return `<span class="conf conf-estimated">~ Estimated</span>`;
-  return '';
+/* ---- detail sheet: servings + meal, then log ---- */
+let fpDetail=null, fpServings=1, fpMeal='';
+function openFoodDetail(id){
+  const r=fpRows.find(x=>x.id===id)||stapleRow(id);
+  if(!r)return;
+  fpDetail=r;fpServings=1;fpMeal='';
+  renderFoodDetail();
 }
-
-function renderSmartBody(){
-  if(smartState==='idle')return `<div class="pk-empty" style="text-align:left;font-style:normal">
-      Describe what you ate in plain words — “two eggs and a tortilla”, “6oz chicken and rice”.
-      <div style="margin-top:14px"><button class="btn" onclick="runSmart()">Look it up</button></div>
-      <div style="margin-top:12px;font-size:13px;color:var(--text3)">Checks USDA first. You choose whether to go further.</div>
-    </div>`;
-  if(smartState==='loading')return `<div class="pk-empty">Reading that…</div>`;
-  if(smartState==='error')return `<div class="pk-empty">⚠ ${escHtml(smartErr||'Lookup failed')}.
-      <div style="margin-top:12px"><button class="btn ghost" style="max-width:160px" onclick="runSmart()">Try again</button></div></div>`;
-  if(!smartItems.length)return `<div class="pk-empty">Didn't recognise any food in that.</div>`;
-
-  let out='';
-  smartItems.forEach((it,i)=>{
-    if(!it.found){
-      out+=`<div class="smartcard missing">
-        <div class="sc-name">${escHtml(it.name)}</div>
-        <div class="sc-sub">No verified data found.</div>
-      </div>`;
-      return;
-    }
-    const n=it.nutrients||{};
-    const q=it.qty||1;
-    const src=it.source_url
-      ? `<a class="sc-src" href="${escAttr(it.source_url)}" target="_blank" rel="noopener">${escHtml(it.source_label||'source')} ↗</a>`
-      : `<span class="sc-src plain">${escHtml(it.source_label||'')}</span>`;
-    out+=`<div class="smartcard ${it.confidence==='estimated'?'est':''}">
-      <div class="sc-top">
-        <div class="sc-name">${escHtml(it.name)}</div>
-        ${confBadge(it.confidence)}
-      </div>
-      <div class="sc-sub">${q>1?q+' × ':''}${escHtml(it.serving||'1 serving')}</div>
-      <div class="sc-macros">${Math.round((n.calories||0)*q)} cal · ${Math.round((n.protein||0)*q)}g P · ${Math.round((n.carbs||0)*q)}g C · ${Math.round((n.fat||0)*q)}g F</div>
-      <div class="sc-foot">${src}<button class="sc-log" onclick="logSmartItem(${i})">Log</button></div>
-    </div>`;
-  });
-
-  // Escalation offers — only for what's still missing, and only opt-in.
-  const missing=smartItems.filter(x=>!x.found).length;
-  if(missing){
-    out+=`<div class="escalate">
-      <div class="esc-head">${missing} item${missing>1?'s':''} not in USDA.</div>`;
-    if(!smartAllow.includes('published'))
-      out+=`<button class="btn ghost" onclick="runSmart('published')">Check the brand's website</button>`;
-    if(smartAllow.includes('published')&&!smartAllow.includes('estimated'))
-      out+=`<button class="btn ghost" onclick="runSmart('estimated')">Estimate it instead</button>`;
-    if(smartAllow.includes('published')&&smartAllow.includes('estimated'))
-      out+=`<div class="pk-empty" style="font-size:13px;font-style:normal">Nothing found, even estimating. Try the Search tab or add it manually.</div>`;
-    out+=`</div>`;
-  }
-  if(smartItems.filter(x=>x.found).length>1){
-    out+=`<button class="btn" style="margin-top:10px" onclick="logAllSmart()">Log all ${smartItems.filter(x=>x.found).length} items</button>`;
-  }
-  return out;
+function stapleRow(id){
+  if(!String(id).startsWith('staple-'))return null;
+  const f=(FOODS||[]).find(x=>'staple-'+x.id===id);
+  if(!f)return null;
+  return {id, name:f.name, brand:null, serving:f.serving||'1 serving', per:'serving',
+    nutrients:Object.fromEntries(NUTRIENTS.map(n=>[n.k,Number(f[n.k])||0])),
+    source:'staple', sourceLabel:'Saved', sourceUrl:null, _stapleId:f.id};
 }
-
-async function logSmartItem(i){
-  const it=smartItems[i];
-  if(!it||!it.found)return;
-  const ok=await saveSmartItem(it);
-  if(ok){toast(`Logged ${it.name}`);smartItems.splice(i,1);
-    if(!smartItems.length){closeFoodPicker();await loadAll();active='food';render();}
-    else renderFoodPicker();}
-}
-async function logAllSmart(){
-  const found=smartItems.filter(x=>x.found);
-  let n=0;
-  for(const it of found){ if(await saveSmartItem(it))n++; }
-  toast(`Logged ${n} item${n===1?'':'s'}`);
-  closeFoodPicker();await loadAll();active='food';render();
-}
-async function saveSmartItem(it){
-  const n=it.nutrients||{};const q=it.qty||1;
-  const row={user_id:user.id,date:foodToday(),name:it.name,qty:1,
-    source:it.confidence==='verified'?'usda':'smart',
-    confidence:it.confidence||null,source_url:it.source_url||null};
-  NUTRIENTS.forEach(nn=>{ row[nn.k]=Math.round(((n[nn.k]||0)*q)*10)/10; });
-  const {error}=await sb.from('food_log').insert(row);
-  if(error){toast('⚠ NOT saved: '+error.message);return false;}
-  return true;
-}
-
-/* --- USDA result → confirm serving → log --- */
-let usdaPick=null, usdaMult=1;
-
-function pickUsdaId(fdcId){
-  let f=(usdaResults||[]).find(x=>String(x.fdcId)===String(fdcId));
-  if(!f&&usdaGroups){
-    for(const g of usdaGroups){ const hit=(g.items||[]).find(x=>String(x.fdcId)===String(fdcId)); if(hit){f=hit;break;} }
-  }
-  if(!f)return;
-  usdaPick=f;usdaMult=1;renderUsdaConfirm();
-}
-function pickUsda(i){
-  usdaPick=usdaResults[i]; if(!usdaPick)return;
-  // Default multiplier: whole foods are per-100g (default to 100g -> mult 1 means "100g").
-  // For per-serving (branded), mult 1 = one serving.
-  usdaMult=1;
-  renderUsdaConfirm();
-}
-function renderUsdaConfirm(){
-  let m=E('usdaconfirm');
-  if(!m){m=document.createElement('div');m.id='usdaconfirm';m.className='modal';document.body.appendChild(m);}
-  const f=usdaPick; const n=f.nutrients||{};
-  const per100 = f.per==='100g';
-  // The "amount" the user is entering:
-  //  - per-100g foods: grams (default 100)
-  //  - per-serving foods: number of servings (default 1)
-  const amount = per100 ? Math.round(usdaMult*100) : usdaMult;
-  const scaled = {}; visKeys().forEach(k=>{ scaled[k]=round1((n[k]||0)*usdaMult); });
-  const servingLabel = per100
-    ? `grams (USDA data is per 100g)`
-    : (f.householdServing ? `servings — 1 = ${escHtml(f.householdServing)}` : `servings (1 = ${f.servingSize||''}${f.servingUnit||''})`);
+function renderFoodDetail(){
+  let m=E('fooddetail');
+  if(!m){m=document.createElement('div');m.id='fooddetail';m.className='modal';document.body.appendChild(m);}
+  const r=fpDetail, n=r.nutrients||{}, q=fpServings||1;
   const vis=visibleNutrients();
-  const macroLine = vis.filter(nn=>nn.k!=='calories').map(nn=>`${scaled[nn.k]!=null?Math.round(scaled[nn.k]):0}${nn.unit} ${nn.label.toLowerCase()}`).join(' · ');
-  m.innerHTML=`<div class="modal-bg" onclick="closeUsdaConfirm()"></div>
+  const per=r.per==='100g'?'100 g':(r.serving||'1 serving');
+  m.innerHTML=`<div class="modal-bg" onclick="closeFoodDetail()"></div>
     <div class="modal-card">
-      <div class="pk-head"><b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px">${escHtml(f.name)}</b>
-        <button class="pk-close" onclick="closeUsdaConfirm()">✕</button></div>
+      <div class="pk-head">
+        <b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px;flex:1">${escHtml(r.name)}</b>
+        <button class="pk-close" onclick="closeFoodDetail()">✕</button>
+      </div>
       <div class="pk-list">
+        <div class="fd-badge">${srcBadge(r)}${r.sourceUrl?` <a class="fd-src" href="${escAttr(r.sourceUrl)}" target="_blank" rel="noopener">View source ↗</a>`:''}</div>
         <div class="profilefield">
-          <label>${per100?'Amount in grams':'How many servings'}</label>
-          <input type="number" inputmode="decimal" id="uc_amt" value="${amount}" style="font-size:20px">
-          <div class="daymeta" style="text-transform:none;letter-spacing:0;margin-top:6px">${escHtml(servingLabel)}</div>
+          <label>Servings <span style="font-weight:400;color:var(--text2)">(1 = ${escHtml(per)})</span></label>
+          <input type="number" inputmode="decimal" step="0.25" id="fd_qty" value="${q}" style="font-size:20px">
+        </div>
+        <div class="profilefield">
+          <label>Meal</label>
+          <div class="mealpick">
+            ${['Breakfast','Lunch','Dinner','Snack'].map(s=>
+              `<button class="mp ${fpMeal===s?'on':''}" onclick="fpMeal='${s}';renderFoodDetail()">${s}</button>`).join('')}
+          </div>
         </div>
         <div class="ringcard" style="text-align:left;padding:14px 16px">
-          <div class="dc-big" id="uc_cal">${Math.round(scaled.calories||0)}<span style="font-size:15px;color:var(--text2)"> cal</span></div>
-          <div class="dc-sub" id="uc_macros">${macroLine}</div>
+          <div class="dc-big" id="fd_cal">${Math.round((n.calories||0)*q)}<span style="font-size:15px;color:var(--text2)"> cal</span></div>
+          <div class="dc-sub" id="fd_macros">${vis.filter(x=>x.k!=='calories').map(x=>`${Math.round((n[x.k]||0)*q)}${x.unit} ${x.label.toLowerCase()}`).join(' · ')}</div>
         </div>
-        <button class="btn" onclick="logUsda(false)">Log it</button>
-        <button class="btn ghost" onclick="logUsda(true)">Log &amp; save as staple</button>
+        <button class="btn" onclick="logFoodDetail()">Add to diary</button>
+        ${r.source!=='staple'?`<button class="btn ghost" onclick="logFoodDetail(true)">Add &amp; save to my foods</button>`:''}
       </div>
     </div>`;
-  const amt=E('uc_amt');
-  amt.oninput=()=>{
-    const v=Number(amt.value)||0;
-    usdaMult = per100 ? v/100 : v;
-    // live-update the preview without full re-render (keeps focus)
-    const sc={}; visKeys().forEach(k=>{sc[k]=round1((n[k]||0)*usdaMult);});
-    E('uc_cal').innerHTML=`${Math.round(sc.calories||0)}<span style="font-size:15px;color:var(--text2)"> cal</span>`;
-    E('uc_macros').textContent=vis.filter(nn=>nn.k!=='calories').map(nn=>`${Math.round(sc[nn.k]||0)}${nn.unit} ${nn.label.toLowerCase()}`).join(' · ');
+  const qi=E('fd_qty');
+  if(qi)qi.oninput=()=>{
+    fpServings=Number(qi.value)||0;
+    const s=fpServings;
+    E('fd_cal').innerHTML=`${Math.round((n.calories||0)*s)}<span style="font-size:15px;color:var(--text2)"> cal</span>`;
+    E('fd_macros').textContent=vis.filter(x=>x.k!=='calories').map(x=>`${Math.round((n[x.k]||0)*s)}${x.unit} ${x.label.toLowerCase()}`).join(' · ');
   };
-  amt.focus();amt.select();
 }
-function closeUsdaConfirm(){const m=E('usdaconfirm');if(m)m.remove();}
-function visKeys(){return NUTRIENTS.map(n=>n.k);}
-function round1(v){return Math.round((Number(v)||0)*10)/10;}
+function closeFoodDetail(){const m=E('fooddetail');if(m)m.remove();}
 
-async function logUsda(alsoSaveStaple){
-  const f=usdaPick; if(!f)return;
-  const n=f.nutrients||{};
-  // Build a food-like object with SCALED nutrients, qty=1 (already scaled).
-  const scaled={ name:f.name, source:'usda' };
-  NUTRIENTS.forEach(nn=>{ scaled[nn.k]=round1((n[nn.k]||0)*usdaMult); });
+async function logFoodDetail(alsoSave){
+  const r=fpDetail;if(!r)return;
+  const n=r.nutrients||{},q=fpServings||1;
+  let foodId=r._stapleId||null;
 
-  if(alsoSaveStaple){
-    // Save an unscaled-per-"one serving" staple: store what the user configured as one serving.
-    const per100=f.per==='100g';
-    const servingTxt = per100 ? `${Math.round(usdaMult*100)} g` : (f.householdServing||`${f.servingSize||''}${f.servingUnit||''}`);
-    const stapleRow={ user_id:user.id, name:f.name, serving:servingTxt, source:'usda', archived:false };
-    NUTRIENTS.forEach(nn=>{ stapleRow[nn.k]=round1((n[nn.k]||0)*usdaMult); });
-    const {data,error}=await sb.from('foods').insert(stapleRow).select().maybeSingle();
-    if(error){toast('⚠ staple not saved: '+error.message);}
-    else{ toast('Saved staple'); if(data)scaled.food_id=data.id; }
+  if(alsoSave){
+    const srow={user_id:user.id,name:r.name,serving:r.serving||'1 serving',
+      source:r.source==='staple'?'custom':r.source,
+      confidence:confOf(r.source),source_url:r.sourceUrl||null};
+    NUTRIENTS.forEach(x=>{srow[x.k]=round1(n[x.k]||0);});
+    const {data,error}=await sb.from('foods').insert(srow).select().maybeSingle();
+    if(error)toast('⚠ not saved to my foods: '+error.message);
+    else if(data)foodId=data.id;
   }
 
-  // Log it for today (qty 1 because nutrients already scaled).
-  const row={ user_id:user.id, date:foodToday(), food_id:scaled.food_id||null, name:f.name, meal_slot:null, qty:1, source:'usda' };
-  NUTRIENTS.forEach(nn=>{ row[nn.k]=scaled[nn.k]!=null?scaled[nn.k]:null; });
+  const row={user_id:user.id,date:foodToday(),food_id:foodId,name:r.name,
+    meal_slot:fpMeal||null,qty:q,source:r.source==='staple'?'custom':r.source,
+    confidence:confOf(r.source),source_url:r.sourceUrl||null};
+  NUTRIENTS.forEach(x=>{row[x.k]=round1((n[x.k]||0)*q);});
   const {error}=await sb.from('food_log').insert(row);
   if(error){toast('⚠ NOT saved: '+error.message);return;}
-  toast(`Logged ${f.name}`);
-  closeUsdaConfirm();closeFoodPicker();
+  toast(`Logged ${r.name}`);
+  closeFoodDetail();closeFoodPicker();
   await loadAll();active='food';render();
 }
+function confOf(src){
+  if(src==='usda'||src==='usda_branded'||src==='off')return 'verified';
+  if(src==='web')return 'published';
+  if(src==='estimate')return 'estimated';
+  return 'custom';
+}
+function round1(v){return Math.round((Number(v)||0)*10)/10;}
 
+function addManualFromQuery(){
+  closeFoodPicker();
+  openStapleEditor(null,{name:(fpQuery||'').trim(),oneOff:true});
+}
 async function pickFood(id){
-  const f=FOODS.find(x=>x.id===id);if(!f){closeFoodPicker();return}
-  const qty=prompt(`How many servings of ${f.name}?`,'1');
-  if(qty===null){return}
-  closeFoodPicker();
-  await addFoodLog(f,qty,null);
+  openFoodDetail('staple-'+id);
 }
-function oneOffFromQuery(){
-  closeFoodPicker();
-  openStapleEditor(null,{name:foodQuery.trim(),oneOff:true});
-}
+function oneOffFromQuery(){ addManualFromQuery(); }
 
 /* --- staple editor (define/edit a food) --- */
 let editingStapleId=null, stapleOneOff=false;
