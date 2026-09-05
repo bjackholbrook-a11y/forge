@@ -403,7 +403,7 @@ html.theme-dark .wm-light{display:none}
 /* history rows + remaining line */
 .foodrow.hist{background:var(--surface);border-color:var(--line)}
 .foodrow.hist:active{background:color-mix(in srgb,var(--accent) 10%,var(--surface));border-color:var(--accent)}
-.fp-hint{font-family:var(--font-body);font-size:12px;color:var(--text3);text-align:center;padding:14px 0 4px}
+
 .remaining{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
   padding:12px 14px;margin:14px 0 4px;font-family:var(--font-data);font-size:14px;color:var(--text2)}
@@ -411,6 +411,73 @@ html.theme-dark .wm-light{display:none}
 .remaining.over b{color:var(--warn)}
 .rm-op{color:var(--text3)}
 .mealempty{font-family:var(--font-body);font-size:14px;color:var(--text3);font-style:italic;padding:10px 0 12px}
+
+
+.pk-meal-lab{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text2)}
+.mp.sm{font-size:13px;padding:6px 12px}
+
+/* ---- food picker, MFP-shaped ---- */
+.fp-card{max-height:88vh}
+.fp-top{display:flex;align-items:center;gap:8px;padding:14px 16px 8px}
+.fp-back{background:var(--surface2);border:1px solid var(--line);color:var(--text);
+  border-radius:var(--r-pill);width:36px;height:36px;font-size:16px;cursor:pointer;flex:0 0 auto}
+.fp-mealsel{flex:1;background:none;border:none;color:var(--accent);
+  font-family:var(--font-display);font-size:19px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;cursor:pointer;text-align:center}
+.fp-mealsel .caret{font-size:13px}
+.fp-spacer{width:36px;flex:0 0 auto}
+.fp-searchwrap{padding:0 16px 10px}
+.fp-searchwrap input{width:100%;background:var(--surface2);border:1.5px solid var(--line);
+  color:var(--text);font-family:var(--font-body);font-size:16px;padding:12px 14px;border-radius:var(--r-pill)}
+.fp-tabs{display:flex;gap:18px;padding:0 16px;border-bottom:1px solid var(--line)}
+.fp-tab{background:none;border:none;color:var(--text3);font-family:var(--font-body);
+  font-size:15px;font-weight:600;padding:10px 0 9px;cursor:pointer;border-bottom:2px solid transparent}
+.fp-tab.on{color:var(--text);border-bottom-color:var(--accent)}
+.fp-actions{display:flex;gap:8px;padding:12px 16px 4px}
+.fp-act{flex:1;background:var(--surface2);border:1px solid var(--line);color:var(--accent);
+  border-radius:var(--r-input);font-family:var(--font-body);font-size:13px;font-weight:600;
+  padding:10px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.fp-act .fa-i{font-size:17px}
+.fp-sec{font-family:var(--font-display);font-size:17px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;margin:14px 0 8px}
+/* rows */
+.frow{display:flex;align-items:stretch;gap:8px;border-bottom:1px solid var(--line)}
+.frow-main{flex:1;background:none;border:none;text-align:left;padding:13px 0;cursor:pointer;min-width:0}
+.frow-name{font-family:var(--font-body);font-size:16px;font-weight:600;color:var(--text);line-height:1.3}
+.frow-meta{font-family:var(--font-data);font-size:13px;color:var(--text2);margin-top:3px}
+.frow-add{flex:0 0 auto;align-self:center;background:var(--surface2);border:1px solid var(--line);
+  color:var(--accent);border-radius:var(--r-pill);width:38px;height:38px;font-size:22px;line-height:1;cursor:pointer}
+.frow-add:active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+/* meal menu */
+.mealmenu-card{position:relative;background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;padding:6px;width:230px;margin:auto;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.mm-opt{display:block;width:100%;background:none;border:none;color:var(--text);
+  font-family:var(--font-body);font-size:17px;font-weight:600;padding:14px;text-align:left;cursor:pointer;border-radius:10px}
+.mm-opt.on{color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+#mealmenu{align-items:center}
+/* detail */
+.fd-card{max-height:88vh}
+.fd-top{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.fd-title{flex:1;text-align:center;font-family:var(--font-body);font-size:16px;font-weight:600}
+.fd-log{background:none;border:none;color:var(--accent);font-family:var(--font-body);
+  font-size:16px;font-weight:700;cursor:pointer;padding:4px 8px}
+.fd-name{font-family:var(--font-display);font-size:24px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;line-height:1.1;margin-bottom:4px}
+.fd-brand{font-family:var(--font-body);font-size:14px;color:var(--text2);margin-bottom:16px}
+.fd-brand a{color:var(--accent);text-decoration:none;font-weight:600}
+.fd-row{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 0;border-bottom:1px solid var(--line);font-family:var(--font-body);font-size:16px}
+.fd-val{color:var(--accent);font-weight:600;text-align:right}
+.fd-val.link{background:none;border:none;font-family:var(--font-body);font-size:16px;cursor:pointer}
+.fd-input{width:90px;text-align:right;background:var(--surface2);border:1px solid var(--line);
+  color:var(--accent);font-family:var(--font-data);font-size:17px;font-weight:600;padding:9px;border-radius:8px}
+.fd-summary{display:flex;align-items:center;gap:18px;padding:20px 0 8px;flex-wrap:wrap}
+.fd-cal{font-family:var(--font-data);font-size:38px;font-weight:700;line-height:1}
+.fd-cal span{font-family:var(--font-body);font-size:14px;color:var(--text2);font-weight:500;margin-left:6px}
+.fd-macros{display:flex;gap:18px;flex:1;flex-wrap:wrap}
+.fd-mac{display:flex;flex-direction:column}
+.fd-mac b{font-family:var(--font-data);font-size:17px;font-weight:700}
+.fd-mac span{font-family:var(--font-body);font-size:12px;color:var(--text2)}
 </style>
 </head>
 <body>
@@ -419,7 +486,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v3.5.0</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v3.6.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -2152,7 +2219,7 @@ function shiftFoodDate(n){
 /* --- logging a food --- */
 async function quickLog(foodId){
   const f=FOODS.find(x=>x.id===foodId);if(!f)return;
-  await addFoodLog(f,1,null);
+  await addFoodLog(f,1,mealByTime());
 }
 async function addFoodLog(food,qty,slot){
   const q=Number(qty)||1;
@@ -2172,6 +2239,17 @@ async function delFoodLog(id){
 
 function escHtml(s){return String(s==null?'':s).replace(/[&<>]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));}
 function escAttr(s){return String(s==null?'':s).replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+
+/* Which meal is it, roughly? Used as the default so logging never lands in
+   Unsorted by accident — you can still change it in the sheet. */
+function mealByTime(d){
+  const h=(d||new Date()).getHours();
+  if(h<10)return 'Breakfast';
+  if(h<15)return 'Lunch';
+  if(h<21)return 'Dinner';
+  return 'Snack';
+}
 
 const MEAL_SLOTS=['Breakfast','Lunch','Dinner','Snack','Unsorted'];
 
@@ -2368,26 +2446,44 @@ function stapleToRow(f){
   };
 }
 
-/* ============ FOOD PICKER — one search, one list ============
-   Every row carries where its numbers came from. Databases answer instantly;
-   brand-website and estimate tiers are fetched separately and appended as they
-   arrive, so the slow paths never block the fast ones.                     */
+/* ============ FOOD PICKER ============
+   Structure follows MFP: meal chosen in the header, tabbed history, a + on
+   every row to log instantly, and a detail screen with labelled value rows.
+   Tap the row to adjust; tap + to log it as-is. Both visible, neither hidden
+   behind a gesture. */
 let fpQuery='';
-let fpRows=[];                 // flat, ordered, each with .source
+let fpRows=[];                 // search results
 let fpState='idle';            // idle | loading | done | error
 let fpErr='';
-let fpPage=0, fpHasMore=false, fpMoreLoading=false;
-let fpAiState='';              // '' | 'web' | 'estimate' | 'done'
-let fpSeq=0;                   // guards against out-of-order responses
-let fpInterp=null, fpLastDbQuery='', fpPresetMeal='';
+let fpPage=0, fpHasMore=false, fpMoreLoading=false, fpAdded=0;
+let fpAiState='';
+let fpSeq=0;
+let fpInterp=null, fpLastDbQuery='';
+let fpMeal='';                 // the meal everything logs into
+let fpTab='history';           // history | meals | foods
 
 function openFoodPicker(presetMeal){
-  fpPresetMeal=presetMeal||'';
   fpQuery='';fpRows=[];fpState='idle';fpErr='';
-  fpPage=0;fpHasMore=false;fpMoreLoading=false;fpAiState='';fpInterp=null;fpLastDbQuery='';
+  fpPage=0;fpHasMore=false;fpMoreLoading=false;fpAiState='';
+  fpInterp=null;fpLastDbQuery='';fpTab='history';
+  fpMeal=presetMeal||mealByTime();
   renderFoodPicker();
 }
 function closeFoodPicker(){const m=E('foodpicker');if(m)m.remove();}
+function setPickerTab(t){fpTab=t;renderFoodPicker();}
+
+/* ---- meal dropdown ---- */
+function openMealMenu(){
+  let m=E('mealmenu');
+  if(!m){m=document.createElement('div');m.id='mealmenu';m.className='modal';document.body.appendChild(m);}
+  m.innerHTML=`<div class="modal-bg" onclick="closeMealMenu()"></div>
+    <div class="mealmenu-card">
+      ${['Breakfast','Lunch','Dinner','Snack'].map(s=>
+        `<button class="mm-opt ${fpMeal===s?'on':''}" onclick="pickMeal('${s}')">${s}</button>`).join('')}
+    </div>`;
+}
+function closeMealMenu(){const m=E('mealmenu');if(m)m.remove();}
+function pickMeal(s){fpMeal=s;closeMealMenu();renderFoodPicker();if(E('fooddetail'))renderFoodDetail();}
 
 function renderFoodPicker(){
   const prev=E('fp_list');
@@ -2395,12 +2491,26 @@ function renderFoodPicker(){
   let m=E('foodpicker');
   if(!m){m=document.createElement('div');m.id='foodpicker';m.className='modal';document.body.appendChild(m);}
   m.innerHTML=`<div class="modal-bg" onclick="closeFoodPicker()"></div>
-    <div class="modal-card">
-      <div class="pk-head">
-        <input type="text" id="fp_q" placeholder="Search foods…" value="${escAttr(fpQuery)}"
-               autocomplete="off" enterkeyhint="search">
-        <button class="pk-close" onclick="closeFoodPicker()">✕</button>
+    <div class="modal-card fp-card">
+      <div class="fp-top">
+        <button class="fp-back" onclick="closeFoodPicker()">✕</button>
+        <button class="fp-mealsel" onclick="openMealMenu()">${escHtml(fpMeal||'Select a meal')} <span class="caret">▾</span></button>
+        <span class="fp-spacer"></span>
       </div>
+      <div class="fp-searchwrap">
+        <input type="text" id="fp_q" placeholder="Search or describe what you ate…"
+               value="${escAttr(fpQuery)}" autocomplete="off" enterkeyhint="search">
+      </div>
+      ${fpState==='idle'?`
+      <div class="fp-tabs">
+        ${[['history','History'],['meals','My Meals'],['foods','My Foods']].map(([k,lab])=>
+          `<button class="fp-tab ${fpTab===k?'on':''}" onclick="setPickerTab('${k}')">${lab}</button>`).join('')}
+      </div>
+      <div class="fp-actions">
+        <button class="fp-act" onclick="focusDescribe()"><span class="fa-i">✎</span>Describe</button>
+        <button class="fp-act" onclick="photoLabel()"><span class="fa-i">◎</span>Photo label</button>
+        <button class="fp-act" onclick="quickAdd()"><span class="fa-i">⊕</span>Quick add</button>
+      </div>`:''}
       <div class="pk-list" id="fp_list">${fpBody()}</div>
     </div>`;
   const nl=E('fp_list');if(nl&&scroll)nl.scrollTop=scroll;
@@ -2408,163 +2518,99 @@ function renderFoodPicker(){
   if(si){
     si.oninput=()=>{fpQuery=si.value;};
     si.onkeydown=(e)=>{if(e.key==='Enter'){e.preventDefault();runFoodSearch();}};
-    si.focus();si.setSelectionRange(si.value.length,si.value.length);
   }
 }
+function focusDescribe(){const si=E('fp_q');if(si)si.focus();}
 
+/* ---- body ---- */
 function fpBody(){
-  // Before typing: your own history. This is where most logging happens, so
-  // every row is ONE TAP to log with the servings and meal you used last time.
-  if(fpState==='idle'){
-    const hist=historyItems();
-    const recent=hist.slice().sort((a,b)=>(b.last||'').localeCompare(a.last||'')).slice(0,15);
-    const recentIds=new Set(recent.map(h=>h.name.toLowerCase()));
-    const frequent=hist.filter(h=>h.count>1&&!recentIds.has(h.name.toLowerCase()))
-                       .sort((a,b)=>b.count-a.count).slice(0,10);
-    const staples=(FOODS||[]).filter(f=>!f.archived);
-
-    let out='';
-    if(!recent.length&&!staples.length){
-      return `<div class="pk-empty" style="font-style:normal">
-        Describe what you ate, or search for a food.
-        <div style="margin-top:14px;font-size:13px;color:var(--text3)">Once you've logged a few things they'll show up here for one-tap logging.</div>
-      </div>`;
-    }
-    if(recent.length){
-      out+=`<div class="pk-cat">Recent</div>`;
-      out+=recent.map(h=>histCard(historyRow(h))).join('');
-    }
-    if(frequent.length){
-      out+=`<div class="pk-cat">Frequent</div>`;
-      out+=frequent.map(h=>histCard(historyRow(h))).join('');
-    }
-    if(staples.length){
-      out+=`<div class="pk-cat">Saved</div>`;
-      out+=staples.map(f=>histCard(stapleToRow(f))).join('');
-    }
-    out+=`<div class="fp-hint">Tap to log · press and hold to adjust first</div>`;
-    return out;
-  }
+  if(fpState==='idle')return idleBody();
   if(fpState==='error')return `<div class="pk-empty">⚠ ${escHtml(fpErr||'Search failed')}
       <div style="margin-top:12px"><button class="btn ghost" style="max-width:160px" onclick="runFoodSearch()">Try again</button></div></div>`;
   if(fpState==='loading'&&!fpRows.length)return `<div class="fp-status">Searching…</div>`;
 
-  let out='';
-  if(fpRows.length){
-    out+=fpRows.map(r=>rowCard(r)).join('');
-  }
-  // Progressive status for the slower tiers.
+  let out=`<div class="fp-sec">Results</div>`;
+  out+=fpRows.map(r=>foodRow(r)).join('');
   if(fpAiState==='web')out+=`<div class="fp-status">Checking the brand's website…</div>`;
   else if(fpAiState==='estimate')out+=`<div class="fp-status">Estimating…</div>`;
-
   if(!fpRows.length&&fpAiState==='done')
     out+=`<div class="pk-empty">Nothing found for “${escHtml(fpQuery)}”.
-      <div style="margin-top:12px"><button class="btn ghost" style="max-width:200px" onclick="addManualFromQuery()">Enter it manually</button></div></div>`;
-
+      <div style="margin-top:12px"><button class="btn ghost" style="max-width:200px" onclick="quickAdd()">Enter it manually</button></div></div>`;
   if(fpRows.length){
     out+=`<div class="pk-more">`;
     if(fpMoreLoading)out+=`<div class="pk-empty" style="padding:10px 0">Loading…</div>`;
-    else if(fpHasMore)out+=`<button class="btn ghost" onclick="runFoodSearch(true)">Show more</button>
-      <div class="fp-count">${fpRows.length} shown</div>`;
-    out+=`<button class="btn ghost" style="margin-top:8px" onclick="addManualFromQuery()">Enter manually</button></div>`;
+    else if(fpHasMore)out+=`<button class="btn ghost" onclick="runFoodSearch(true)">Show more</button>`;
+    out+=`</div>`;
   }
   return out;
 }
 
+function idleBody(){
+  if(fpTab==='history'){
+    const hist=historyItems();
+    if(!hist.length)return `<div class="pk-empty" style="font-style:normal">
+      Nothing logged yet. Search above, or describe your meal — “two eggs and a tortilla”.</div>`;
+    const recent=hist.slice().sort((a,b)=>(b.last||'').localeCompare(a.last||''));
+    return `<div class="fp-sec">Recently logged</div>`+
+      recent.slice(0,30).map(h=>foodRow(historyRow(h))).join('');
+  }
+  if(fpTab==='meals'){
+    const meals=(FOODS||[]).filter(f=>!f.archived&&f.is_meal);
+    if(!meals.length)return `<div class="pk-empty" style="font-style:normal">
+      No saved meals yet. Log something, then “Save to my foods”.</div>`;
+    return `<div class="fp-sec">My meals</div>`+meals.map(f=>foodRow(stapleToRow(f))).join('');
+  }
+  const foods=(FOODS||[]).filter(f=>!f.archived&&!f.is_meal);
+  if(!foods.length)return `<div class="pk-empty" style="font-style:normal">
+    No saved foods yet.</div>`;
+  return `<div class="fp-sec">My foods</div>`+foods.map(f=>foodRow(stapleToRow(f))).join('');
+}
 
-/* History rows log in ONE TAP. Long-press opens the confirm sheet instead. */
-let histPressTimer=null, histLong=false;
-function histCard(r){
+/* ---- a row: tap to open, + to log immediately ---- */
+const FPROWS={};
+function foodRow(r){
+  FPROWS[r.id]=r;
   const n=r.nutrients||{};
   const q=r._lastQty||1;
-  const meal=r._lastMeal?` · ${escHtml(r._lastMeal)}`:'';
-  HISTROWS[r.id]=r;
-  return `<button class="foodrow hist" id="hr_${r.id}"
-      onpointerdown="histPress('${r.id}')" onpointerup="histRelease('${r.id}')" onpointerleave="histCancel()">
-    <div class="fr-top">
-      <span class="fr-name">${escHtml(r.name)}</span>
-      ${srcBadge(r)}
-    </div>
-    <div class="fr-macros">${Math.round((n.calories||0)*q)} cal · ${Math.round((n.protein||0)*q)}g P · ${Math.round((n.carbs||0)*q)}g C · ${Math.round((n.fat||0)*q)}g F
-      <span class="fr-per">${q!==1?`· ${q} servings`:''}${meal}</span></div>
-  </button>`;
+  const cal=Math.round((n.calories||0)*q);
+  const serving=q!==1?`${q} × ${r.serving||'serving'}`:(r.serving||'1 serving');
+  const src=r.sourceLabel||'';
+  return `<div class="frow">
+    <button class="frow-main" onclick="openFoodDetail('${r.id}')">
+      <div class="frow-name">${escHtml(r.name)}</div>
+      <div class="frow-meta">${cal} cal · ${escHtml(serving)}${src?` · ${escHtml(src)}`:''}</div>
+    </button>
+    <button class="frow-add" onclick="logRowNow('${r.id}')" aria-label="Log ${escAttr(r.name)}">+</button>
+  </div>`;
 }
-const HISTROWS={};
-function histPress(id){histLong=false;histCancel();histPressTimer=setTimeout(()=>{histLong=true;openHistDetail(id);},450);}
-function histRelease(id){clearTimeout(histPressTimer);if(histLong){histLong=false;return;}quickLog(id);}
-function histCancel(){clearTimeout(histPressTimer);}
-function openHistDetail(id){
-  const r=HISTROWS[id];if(!r)return;
-  fpDetail=r;fpServings=r._lastQty||1;fpMeal=fpPresetMeal||r._lastMeal||'';
-  renderFoodDetail();
-}
-// One tap: log it exactly as last time.
-async function quickLog(id){
-  const r=HISTROWS[id];if(!r)return;
+
+// The + button: log it exactly as shown, into the selected meal.
+async function logRowNow(id){
+  const r=FPROWS[id];if(!r)return;
   const n=r.nutrients||{};
   const q=r._lastQty||1;
-  const meal=fpPresetMeal||r._lastMeal||null;
   const row={user_id:user.id,date:foodToday(),food_id:r._stapleId||r._foodId||null,
-    name:r.name,meal_slot:meal,qty:q,
+    name:r.name,meal_slot:fpMeal||null,qty:q,
     source:r.source==='staple'?'custom':r.source,
     confidence:confOf(r.source),source_url:r.sourceUrl||null};
   NUTRIENTS.forEach(x=>{row[x.k]=round1((n[x.k]||0)*q);});
   const {error}=await sb.from('food_log').insert(row);
   if(error){toast('⚠ NOT saved: '+error.message);return;}
-  toast(`Logged ${r.name}`);
+  toast(`Added to ${fpMeal}`);
   closeFoodPicker();
   await loadAll();active='food';render();
 }
 
-/* one result row — the source label is the point */
-function rowCard(r){
-  const n=r.nutrients||{};
-  const per=r.per==='100g'?'100 g':(r.serving||'1 serving');
-  const brand=r.brand?` · ${escHtml(r.brand)}`:'';
-  const cls=r.source==='estimate'?'est':(r.source==='web'?'web':'');
-  return `<button class="foodrow ${cls}" onclick="openFoodDetail('${r.id}')">
-    <div class="fr-top">
-      <span class="fr-name">${escHtml(r.name)}</span>
-      ${srcBadge(r)}
-    </div>
-    <div class="fr-macros">${Math.round(n.calories||0)} cal · ${Math.round(n.protein||0)}g P · ${Math.round(n.carbs||0)}g C · ${Math.round(n.fat||0)}g F
-      <span class="fr-per">/ ${escHtml(per)}</span>${brand}</div>
-  </button>`;
-}
-function srcBadge(r){
-  const map={
-    usda:['conf-verified','USDA'],
-    usda_branded:['conf-verified','USDA label'],
-    off:['conf-off','Open Food Facts'],
-    staple:['conf-staple','Saved'],
-    yours:['conf-staple','Yours'],
-    web:['conf-published',r.sourceLabel||'Brand site'],
-    estimate:['conf-estimated','~ Estimate'],
-  };
-  const [cls,label]=map[r.source]||['conf-off',r.sourceLabel||''];
-  // Prefer a specific label the row carries (history rows know whether the
-  // original entry was verified, estimated, or the user's own) over the
-  // generic one keyed off source.
-  return `<span class="conf ${cls}">${escHtml(r.sourceLabel||label)}</span>`;
-}
-
-/* ---- the search itself ---- */
+/* ---- search ---- */
 async function runFoodSearch(more){
   const q=(fpQuery||'').trim();
   if(!q){fpState='idle';renderFoodPicker();return;}
   const seq=++fpSeq;
-
-  if(more){
-    // paging the current database query
-    fpMoreLoading=true;renderFoodPicker();
-    await dbPage(fpLastDbQuery||q,seq,true);
-    return;
-  }
+  if(more){fpMoreLoading=true;renderFoodPicker();await dbPage(fpLastDbQuery||q,seq,true);return;}
 
   fpRows=[];fpPage=0;fpHasMore=false;fpAiState='';fpState='loading';fpInterp=null;
   renderFoodPicker();
 
-  // 1. Ask Claude what this actually is. Fast, and it decides where to look.
   let items=null;
   try{
     const r=await fetch('/api/food-interpret',{method:'POST',headers:{'Content-Type':'application/json'},
@@ -2572,30 +2618,23 @@ async function runFoodSearch(more){
     const d=await r.json();
     if(seq!==fpSeq)return;
     items=(d.items&&d.items.length)?d.items:null;
-  }catch(e){/* fall through to a plain search */}
+  }catch(e){}
   if(seq!==fpSeq)return;
   if(!items)items=[{name:q,brand:null,qty:1,serving:null,kind:'whole',dbQuery:q}];
   fpInterp=items;
 
-  // 2. Route each interpreted item to the right source.
-  //    Restaurant items skip the databases entirely — they aren't in them, and
-  //    searching anyway is what produced Domino's for a Jet's query.
   const primary=items[0];
   fpLastDbQuery=primary.dbQuery||q;
-
   if(primary.kind==='restaurant'){
     fpState='done';renderFoodPicker();
     await escalate(primary,seq);
   }else{
     await dbPage(fpLastDbQuery,seq,false);
     if(seq!==fpSeq)return;
-    // Filter out results that clearly aren't the requested brand.
     if(primary.brand)fpRows=fpRows.filter(r=>brandOk(r,primary.brand));
     renderFoodPicker();
     if(!fpRows.length)await escalate(primary,seq);
   }
-
-  // 3. Multi-item input ("two eggs and a tortilla"): resolve the rest too.
   if(items.length>1){
     for(let i=1;i<items.length;i++){
       if(seq!==fpSeq)return;
@@ -2603,15 +2642,12 @@ async function runFoodSearch(more){
     }
   }
 }
-
-// Keep a database result only if it plausibly matches the requested brand.
 function brandOk(row,brand){
   const b=String(brand).toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(w=>w.length>2);
   if(!b.length)return true;
   const hay=(String(row.name||'')+' '+String(row.brand||'')).toLowerCase();
   return b.every(w=>hay.includes(w));
 }
-
 async function dbPage(q,seq,more){
   const next=(more?fpPage:0)+1;
   try{
@@ -2620,18 +2656,18 @@ async function dbPage(q,seq,more){
     if(seq!==fpSeq)return;
     if(!r.ok||data.error){fpState='error';fpErr=data.error||('HTTP '+r.status);fpMoreLoading=false;renderFoodPicker();return;}
     const seen=new Set(fpRows.map(x=>x.id));
+    const before=fpRows.length;
     (data.items||[]).forEach(x=>{if(!seen.has(x.id)){fpRows.push(x);seen.add(x.id);}});
-    fpPage=data.page||next;
-    fpHasMore=!!data.hasMore;
-    fpState='done';fpMoreLoading=false;
-    renderFoodPicker();
+    fpPage=data.page||next;fpHasMore=!!data.hasMore;
+    fpAdded=fpRows.length-before;
+    if(more&&fpAdded===0&&fpHasMore&&fpPage<6){fpMoreLoading=false;return dbPage(q,seq,true);}
+    if(more&&fpAdded===0)fpHasMore=false;
+    fpState='done';fpMoreLoading=false;renderFoodPicker();
   }catch(err){
     if(seq!==fpSeq)return;
     fpState='error';fpErr=String(err&&err.message||err);fpMoreLoading=false;renderFoodPicker();
   }
 }
-
-// Additional items from a multi-food query: try the DB, then AI, quietly.
 async function resolveExtra(item,seq){
   if(item.kind!=='restaurant'){
     try{
@@ -2646,14 +2682,11 @@ async function resolveExtra(item,seq){
   if(seq!==fpSeq)return;
   if(ai){fpRows.push(ai);renderFoodPicker();}
 }
-
-// Tier 2 then tier 3, each its own short request, appending as they land.
 async function escalate(item,seq){
   fpAiState='web';renderFoodPicker();
   const web=await aiLookup(item,'web');
   if(seq!==fpSeq)return;
   if(web){fpRows.push(web);fpAiState='done';renderFoodPicker();return;}
-
   fpAiState='estimate';renderFoodPicker();
   const est=await aiLookup(item,'estimate');
   if(seq!==fpSeq)return;
@@ -2669,72 +2702,80 @@ async function aiLookup(item,mode){
   }catch(e){return null;}
 }
 
-/* ---- detail sheet: servings + meal, then log ---- */
-let fpDetail=null, fpServings=1, fpMeal='';
+/* ---- detail: labelled value rows, Log in the header ---- */
+let fpDetail=null, fpServings=1;
 function openFoodDetail(id){
-  const r=fpRows.find(x=>x.id===id)||stapleRow(id);
+  const r=FPROWS[id]||stapleRow(id);
   if(!r)return;
-  fpDetail=r;fpServings=1;fpMeal=fpPresetMeal||'';
+  fpDetail=r;fpServings=r._lastQty||1;
   renderFoodDetail();
 }
 function stapleRow(id){
   if(!String(id).startsWith('staple-'))return null;
   const f=(FOODS||[]).find(x=>'staple-'+x.id===id);
-  if(!f)return null;
-  return {id, name:f.name, brand:null, serving:f.serving||'1 serving', per:'serving',
-    nutrients:Object.fromEntries(NUTRIENTS.map(n=>[n.k,Number(f[n.k])||0])),
-    source:'staple', sourceLabel:'Saved', sourceUrl:null, _stapleId:f.id};
+  return f?stapleToRow(f):null;
 }
 function renderFoodDetail(){
   let m=E('fooddetail');
   if(!m){m=document.createElement('div');m.id='fooddetail';m.className='modal';document.body.appendChild(m);}
-  const r=fpDetail, n=r.nutrients||{}, q=fpServings||1;
+  const r=fpDetail,n=r.nutrients||{},q=fpServings||0;
   const vis=visibleNutrients();
-  const per=r.per==='100g'?'100 g':(r.serving||'1 serving');
+  const cal=Math.round((n.calories||0)*q);
   m.innerHTML=`<div class="modal-bg" onclick="closeFoodDetail()"></div>
-    <div class="modal-card">
-      <div class="pk-head">
-        <b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px;flex:1">${escHtml(r.name)}</b>
-        <button class="pk-close" onclick="closeFoodDetail()">✕</button>
+    <div class="modal-card fd-card">
+      <div class="fd-top">
+        <button class="fp-back" onclick="closeFoodDetail()">←</button>
+        <span class="fd-title">Add food</span>
+        <button class="fd-log" onclick="logFoodDetail()">Log</button>
       </div>
       <div class="pk-list">
-        <div class="fd-badge">${srcBadge(r)}${r.sourceUrl?` <a class="fd-src" href="${escAttr(r.sourceUrl)}" target="_blank" rel="noopener">View source ↗</a>`:''}</div>
-        <div class="profilefield">
-          <label>Servings <span style="font-weight:400;color:var(--text2)">(1 = ${escHtml(per)})</span></label>
-          <input type="number" inputmode="decimal" step="0.25" id="fd_qty" value="${q}" style="font-size:20px">
-        </div>
-        <div class="profilefield">
-          <label>Meal</label>
-          <div class="mealpick">
-            ${['Breakfast','Lunch','Dinner','Snack'].map(s=>
-              `<button class="mp ${fpMeal===s?'on':''}" onclick="fpMeal='${s}';renderFoodDetail()">${s}</button>`).join('')}
+        <div class="fd-name">${escHtml(r.name)}</div>
+        <div class="fd-brand">${escHtml(r.sourceLabel||'')}${r.sourceUrl?` · <a href="${escAttr(r.sourceUrl)}" target="_blank" rel="noopener">source ↗</a>`:''}</div>
+
+        <div class="fd-row"><span>Serving size</span><span class="fd-val">${escHtml(r.serving||'1 serving')}</span></div>
+        <div class="fd-row"><span>Number of servings</span>
+          <input class="fd-input" type="number" inputmode="decimal" step="0.25" id="fd_qty" value="${q}"></div>
+        <div class="fd-row"><span>Meal</span>
+          <button class="fd-val link" onclick="openMealMenu()">${escHtml(fpMeal||'Select a meal')} ▾</button></div>
+
+        <div class="fd-summary">
+          <div class="fd-cal" id="fd_cal">${cal}<span>cal</span></div>
+          <div class="fd-macros" id="fd_macros">
+            ${vis.filter(x=>x.k!=='calories').map(x=>
+              `<div class="fd-mac"><b>${Math.round((n[x.k]||0)*q)}${x.unit}</b><span>${x.label}</span></div>`).join('')}
           </div>
         </div>
-        <div class="ringcard" style="text-align:left;padding:14px 16px">
-          <div class="dc-big" id="fd_cal">${Math.round((n.calories||0)*q)}<span style="font-size:15px;color:var(--text2)"> cal</span></div>
-          <div class="dc-sub" id="fd_macros">${vis.filter(x=>x.k!=='calories').map(x=>`${Math.round((n[x.k]||0)*q)}${x.unit} ${x.label.toLowerCase()}`).join(' · ')}</div>
-        </div>
-        <button class="btn" onclick="logFoodDetail()">Add to diary</button>
+
+        <button class="btn" onclick="logFoodDetail()">Add to ${escHtml(fpMeal||'diary')}</button>
         ${r.source!=='staple'?`<button class="btn ghost" onclick="logFoodDetail(true)">Add &amp; save to my foods</button>`:''}
+        <button class="btn ghost" onclick="editRowNutrition()">Edit nutrition</button>
       </div>
     </div>`;
   const qi=E('fd_qty');
   if(qi)qi.oninput=()=>{
     fpServings=Number(qi.value)||0;
     const s=fpServings;
-    E('fd_cal').innerHTML=`${Math.round((n.calories||0)*s)}<span style="font-size:15px;color:var(--text2)"> cal</span>`;
-    E('fd_macros').textContent=vis.filter(x=>x.k!=='calories').map(x=>`${Math.round((n[x.k]||0)*s)}${x.unit} ${x.label.toLowerCase()}`).join(' · ');
+    E('fd_cal').innerHTML=`${Math.round((n.calories||0)*s)}<span>cal</span>`;
+    E('fd_macros').innerHTML=vis.filter(x=>x.k!=='calories').map(x=>
+      `<div class="fd-mac"><b>${Math.round((n[x.k]||0)*s)}${x.unit}</b><span>${x.label}</span></div>`).join('');
   };
 }
 function closeFoodDetail(){const m=E('fooddetail');if(m)m.remove();}
 
+// Correct the numbers before logging — an estimate you fix stays fixed.
+function editRowNutrition(){
+  const r=fpDetail;if(!r)return;
+  closeFoodDetail();closeFoodPicker();
+  openStapleEditor(null,{name:r.name,serving:r.serving,oneOff:true,
+    ...Object.fromEntries(NUTRIENTS.map(x=>[x.k,r.nutrients?r.nutrients[x.k]:null]))});
+}
+
 async function logFoodDetail(alsoSave){
   const r=fpDetail;if(!r)return;
   const n=r.nutrients||{},q=fpServings||1;
-  let foodId=r._stapleId||null;
-
+  let foodId=r._stapleId||r._foodId||null;
   if(alsoSave){
-    const srow={user_id:user.id,name:r.name,serving:r.serving||'1 serving',
+    const srow={user_id:user.id,name:r.name,serving:r.serving||'1 serving',is_meal:false,
       source:r.source==='staple'?'custom':r.source,
       confidence:confOf(r.source),source_url:r.sourceUrl||null};
     NUTRIENTS.forEach(x=>{srow[x.k]=round1(n[x.k]||0);});
@@ -2742,14 +2783,13 @@ async function logFoodDetail(alsoSave){
     if(error)toast('⚠ not saved to my foods: '+error.message);
     else if(data)foodId=data.id;
   }
-
   const row={user_id:user.id,date:foodToday(),food_id:foodId,name:r.name,
     meal_slot:fpMeal||null,qty:q,source:r.source==='staple'?'custom':r.source,
     confidence:confOf(r.source),source_url:r.sourceUrl||null};
   NUTRIENTS.forEach(x=>{row[x.k]=round1((n[x.k]||0)*q);});
   const {error}=await sb.from('food_log').insert(row);
   if(error){toast('⚠ NOT saved: '+error.message);return;}
-  toast(`Logged ${r.name}`);
+  toast(`Added to ${fpMeal||'diary'}`);
   closeFoodDetail();closeFoodPicker();
   await loadAll();active='food';render();
 }
@@ -2761,6 +2801,15 @@ function confOf(src){
 }
 function round1(v){return Math.round((Number(v)||0)*10)/10;}
 
+/* ---- quick add + photo ---- */
+function quickAdd(){
+  closeFoodPicker();
+  openStapleEditor(null,{name:(fpQuery||'').trim()||'Quick add',oneOff:true,_meal:fpMeal});
+}
+function photoLabel(){
+  toast('Photo label coming next');
+}
+async function pickFood(id){openFoodDetail('staple-'+id);}
 function addManualFromQuery(){
   closeFoodPicker();
   openStapleEditor(null,{name:(fpQuery||'').trim(),oneOff:true});
@@ -2778,7 +2827,7 @@ function openEditEntry(id){
   if(!e)return;
   editEntry=e;
   editQty=Number(e.qty)||1;
-  editMeal=e.meal_slot||'';
+  editMeal=e.meal_slot||mealByTime();
   renderEditEntry();
 }
 function renderEditEntry(){
