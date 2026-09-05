@@ -390,6 +390,27 @@ html.theme-dark .wm-light{display:none}
 .calcopt.on b{color:var(--accent)}
 .calcwarn{margin-top:10px;font-size:13px;color:var(--warn);line-height:1.5}
 .calcnote{font-size:13px;color:var(--text2);line-height:1.6;margin:12px 0}
+
+/* staple editor: nutrients in a readable grid, not a squeezed flex row */
+.nutgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 10px;margin-top:6px}
+.nutfield{display:flex;flex-direction:column;min-width:0}
+.nutfield label{font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--text);
+  margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nutfield .nu{font-weight:400;color:var(--text2)}
+.nutfield input{width:100%;font-size:17px;padding:12px 11px}
+@media (min-width:520px){.nutgrid{grid-template-columns:repeat(3,1fr)}}
+
+/* history rows + remaining line */
+.foodrow.hist{background:var(--surface);border-color:var(--line)}
+.foodrow.hist:active{background:color-mix(in srgb,var(--accent) 10%,var(--surface));border-color:var(--accent)}
+.fp-hint{font-family:var(--font-body);font-size:12px;color:var(--text3);text-align:center;padding:14px 0 4px}
+.remaining{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
+  padding:12px 14px;margin:14px 0 4px;font-family:var(--font-data);font-size:14px;color:var(--text2)}
+.remaining b{font-size:17px;color:var(--good)}
+.remaining.over b{color:var(--warn)}
+.rm-op{color:var(--text3)}
+.mealempty{font-family:var(--font-body);font-size:14px;color:var(--text3);font-style:italic;padding:10px 0 12px}
 </style>
 </head>
 <body>
@@ -398,7 +419,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v3.3.0</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v3.5.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -698,6 +719,41 @@ function deloadWeight(w,inc){
   if(c>=w)c=w-step;
   return Math.max(c,step);
 }
+
+/* ---- achievable weights ----
+   Some machines can't make every number. The assisted dip stack is 15 lb plates
+   plus a 5 lb add-on, so it can produce 135 and 140 but NOT 130. Snap suggested
+   weights onto what the machine can actually select, rounding in the direction
+   that matches the intent (harder when earning, easier when deloading). */
+function exSteps(name){
+  for(const day of ['a','b','c']){
+    const ex=EX[day].find(e=>e.name===name);
+    if(ex&&ex.plate_step)return {plate:Number(ex.plate_step),aux:Number(ex.aux_step)||0};
+  }
+  return null;
+}
+// Every weight the machine can produce, ascending, up to a ceiling.
+function achievable(steps,ceiling){
+  const out=[];
+  for(let n=1;n*steps.plate<=ceiling+steps.plate;n++){
+    out.push(n*steps.plate);
+    if(steps.aux)out.push(n*steps.plate+steps.aux);
+  }
+  return out.sort((a,b)=>a-b);
+}
+// dir: 'down' = pick the largest achievable <= target (never overshoot upward)
+//      'up'   = pick the smallest achievable >= target
+function snapWeight(target,steps,dir){
+  if(!steps||!steps.plate)return target;
+  const list=achievable(steps,Math.max(target,0)+steps.plate*2);
+  if(dir==='down'){
+    const c=list.filter(w=>w<=target);
+    return c.length?c[c.length-1]:list[0];
+  }
+  const c=list.filter(w=>w>=target);
+  return c.length?c[0]:list[list.length-1];
+}
+
 function exIncrement(name){
   // find the increment configured for this exercise on any day (first match)
   for(const day of ['a','b','c']){
@@ -728,15 +784,34 @@ function progression(name){
   const last=hist[0];
   const assisted=(lt==='assisted');
 
+  const steps=exSteps(name);
+
   // --- EARNED PROGRESSION ---
   if(last.total>=PASS_TOTAL){
     if(assisted){
       // Less assistance = harder = progress. Floor at 0 (= bodyweight).
-      const next=Math.max(0,last.w-inc);
+      let next=Math.max(0,last.w-inc);
+      if(steps&&next>0){
+        // Snap DOWN so the step is at least as hard as intended, and never
+        // propose a weight the machine can't select.
+        next=snapWeight(next,steps,'down');
+        if(next>=last.w){                    // already at the lowest reachable step
+          const lower=achievable(steps,last.w).filter(w=>w<last.w);
+          next=lower.length?lower[lower.length-1]:0;
+        }
+      }
       return {state:'up',suggest:next,total:last.total,strikes:0,loadType:'assisted',
               graduated: next===0};
     }
-    return{state:'up',suggest:last.w+inc,total:last.total,strikes:0,loadType:lt};
+    let next=last.w+inc;
+    if(steps){
+      next=snapWeight(next,steps,'up');
+      if(next<=last.w){
+        const higher=achievable(steps,last.w+steps.plate*2).filter(w=>w>last.w);
+        next=higher.length?higher[0]:next;
+      }
+    }
+    return{state:'up',suggest:next,total:last.total,strikes:0,loadType:lt};
   }
 
   // --- STRIKES / DELOAD ---
@@ -745,7 +820,20 @@ function progression(name){
     if(hist[i].w===last.w&&hist[i].total<PASS_TOTAL)strikes++;else break;
   }
   if(strikes>=STRIKES){
-    const back = assisted ? assistDeloadWeight(last.w,inc) : deloadWeight(last.w,inc);
+    let back = assisted ? assistDeloadWeight(last.w,inc) : deloadWeight(last.w,inc);
+    if(steps){
+      // Deload should make it EASIER, so round toward easier: more assistance
+      // (up) for assisted machines, less weight (down) for normal ones.
+      back = assisted ? snapWeight(back,steps,'up') : snapWeight(back,steps,'down');
+      if(assisted&&back<=last.w){
+        const higher=achievable(steps,last.w+steps.plate*2).filter(w=>w>last.w);
+        back=higher.length?higher[0]:back;
+      }
+      if(!assisted&&back>=last.w){
+        const lower=achievable(steps,last.w).filter(w=>w<last.w);
+        back=lower.length?lower[lower.length-1]:back;
+      }
+    }
     return{state:'deload',suggest:back,total:last.total,strikes,loadType:lt};
   }
   return{state:'hold',suggest:last.w,total:last.total,strikes,loadType:lt};
@@ -1277,6 +1365,12 @@ function dayView(day){
             <option value="false" ${!ex.warmup?'selected':''}>off</option>
             <option value="true" ${ex.warmup?'selected':''}>on</option>
           </select></div>
+        <div class="field"><label>Plate step</label>
+          <input type="number" inputmode="decimal" id="ps_${i}" value="${ex.plate_step||''}" placeholder="—"
+            onchange="setSteps('${day.id}',${i},this.value,null)"></div>
+        <div class="field"><label>+ Add-on</label>
+          <input type="number" inputmode="decimal" id="as_${i}" value="${ex.aux_step||''}" placeholder="—"
+            onchange="setSteps('${day.id}',${i},null,this.value)"></div>
         <div class="field"><label>Load type</label>
           <select id="lt_${i}" onchange="setLoadType('${day.id}',${i},this.value)">
             ${[['normal','Weight'],['assisted','Assist'],['bodyweight','Body wt']]
@@ -1313,6 +1407,19 @@ function dayView(day){
   return h;
 }
 
+
+
+async function setSteps(dayId,i,plate,aux){
+  const ex=EX[dayId][i];
+  const upd={};
+  if(plate!==null){ex.plate_step=plate===''?null:Number(plate);upd.plate_step=ex.plate_step;}
+  if(aux!==null){ex.aux_step=aux===''?null:Number(aux);upd.aux_step=ex.aux_step;}
+  const {error}=await sb.from('exercises').update(upd).eq('id',ex.id);
+  if(error){toast('⚠ '+error.message);return;}
+  const s=exSteps(ex.name);
+  if(s)toast('Steps: '+achievable(s,s.plate*4).slice(0,6).join(', ')+'…');
+  render();
+}
 
 async function setLoadType(dayId,i,val){
   const ex=EX[dayId][i];ex.load_type=val;
@@ -1561,9 +1668,9 @@ function walkView(){
     <div class="stat"><div class="lab">Mi (wk)</div><div class="val">${wk.miles?wk.miles.toFixed(1):'—'}</div></div>
     <div class="stat"><div class="lab">Cal (wk)</div><div class="val">${wk.cals||'—'}</div></div>
   </div>`;
-  h+=`<div class="daymeta" style="margin-bottom:6px">Walk type</div>
-  <div style="display:flex;gap:4px;margin-bottom:12px">
-    ${['Outdoor','Treadmill','STR'].map(t=>`<button class="tab ${walkType===t?'active':''}" id="wt_${t}" onclick="setWalkType('${t}')">${t.toUpperCase()}</button>`).join('')}
+  h+=`<div class="daymeta" style="margin-bottom:8px">Walk type</div>
+  <div class="mealpick" style="margin-bottom:14px">
+    ${['Outdoor','Treadmill','STR'].map(t=>`<button class="mp ${walkType===t?'on':''}" id="wt_${t}" onclick="setWalkType('${t}')">${t}</button>`).join('')}
   </div>`;
   h+=`<div class="fields">
     <div class="field"><label>Date</label><input type="date" id="wdate" value="${today()}"></div>
@@ -1589,7 +1696,7 @@ function walkView(){
   }).join('');
   return h+'</div>';
 }
-function setWalkType(t){walkType=t;['Outdoor','Treadmill','STR'].forEach(x=>{E('wt_'+x)?.classList.toggle('active',x===t)})}
+function setWalkType(t){walkType=t;['Outdoor','Treadmill','STR'].forEach(x=>{E('wt_'+x)?.classList.toggle('on',x===t)})}
 async function logWalk(){
   const mins=E('wmins').value;
   if(!mins){toast('Add minutes first');return}
@@ -1980,6 +2087,19 @@ function foodView(){
     </div>`;
   });
   h+=`</div>`;
+  // plain remaining-calories math
+  {
+    const tgt=PROFILE&&PROFILE.target_calories?Number(PROFILE.target_calories):null;
+    if(tgt){
+      const eaten=Math.round(totals.calories||0);
+      const left=tgt-eaten;
+      h+=`<div class="remaining ${left<0?'over':''}">
+        <span>${tgt.toLocaleString()} goal</span><span class="rm-op">−</span>
+        <span>${eaten.toLocaleString()} eaten</span><span class="rm-op">=</span>
+        <b>${Math.abs(left).toLocaleString()} ${left<0?'over':'left'}</b>
+      </div>`;
+    }
+  }
   h+=`<div class="fdactions">
     <button class="btn" onclick="openFoodPicker()">＋ Log food</button>
     <button class="btn ghost" onclick="openCopyDay()">Copy from a day</button>
@@ -1988,17 +2108,19 @@ function foodView(){
   // entries, grouped by meal
   const entries=dayEntries(d);
   h+=`<div class="hist"><div class="histhead">${d===today()?'Today':fmtDate(d)} — ${entries.length} item${entries.length===1?'':'s'}</div>`;
-  if(!entries.length)h+=`<div class="empty">Nothing logged yet. Tap “Log food”.</div>`;
-  else{
+  {
     MEAL_SLOTS.forEach(slot=>{
       const rows=entries.filter(e=>(e.meal_slot||'')===(slot==='Unsorted'?'':slot));
-      if(!rows.length)return;
+      // All four meals stay visible so you can always log straight into one.
+      // Unsorted only appears when something's actually in it.
+      if(!rows.length&&slot==='Unsorted')return;
       const cal=rows.reduce((s,e)=>s+(Number(e.calories)||0),0);
       h+=`<div class="mealhead">
         <span>${slot}</span>
         <span class="mh-right"><span class="mh-cal">${Math.round(cal)} cal</span>
         <button class="mh-add" onclick="openFoodPicker('${slot==='Unsorted'?'':slot}')">＋</button></span>
       </div>`;
+      if(!rows.length){h+=`<div class="mealempty">Nothing yet</div>`;}
       h+=rows.map(e=>{
         const bits=vis.filter(n=>n.k!=='calories').map(n=>`${Math.round(Number(e[n.k])||0)}${n.unit} ${n.label.toLowerCase()}`);
         return `<div class="entry entry-tap" onclick="openEditEntry('${e.id}')"><div class="entrytop">
@@ -2187,6 +2309,65 @@ function applyCalc(){
   const el=E('t_calories');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
+
+/* ---- logging history: what you actually eat, ready to re-log in one tap ----
+   Recent = last logged, newest first. Frequent = most logged, all time.
+   Both are derived from food_log, deduplicated by name, and carry the servings
+   and meal you used last time so a single tap reproduces it exactly. */
+function historyItems(){
+  const byName=new Map();
+  (FOODLOG||[]).forEach(e=>{
+    const key=(e.name||'').trim().toLowerCase();
+    if(!key)return;
+    const prev=byName.get(key);
+    const when=e.date||'';
+    if(!prev){
+      byName.set(key,{name:e.name,count:1,last:when,row:e});
+    }else{
+      prev.count++;
+      if(when>prev.last){prev.last=when;prev.row=e;}
+    }
+  });
+  return [...byName.values()];
+}
+// Turn a past log row into something the picker can render and re-log.
+function historyRow(h){
+  const e=h.row;
+  const q=Number(e.qty)||1;
+  const per={};
+  NUTRIENTS.forEach(n=>{per[n.k]=(Number(e[n.k])||0)/(q||1);});
+  return {
+    id:'hist-'+e.id,
+    name:e.name,
+    brand:null,
+    serving:e.serving_label||'1 serving',
+    per:'serving',
+    nutrients:per,
+    source:e.confidence==='estimated'?'estimate':
+           e.confidence==='published'?'web':
+           e.confidence==='verified'?'usda':'yours',
+    sourceLabel:e.confidence==='published'?(e.source_url?hostOfUrl(e.source_url):'Brand site'):
+                e.confidence==='estimated'?'~ Estimate':
+                e.confidence==='verified'?'Verified':'Yours',
+    sourceUrl:e.source_url||null,
+    _lastQty:q,
+    _lastMeal:e.meal_slot||'',
+    _fromHistory:true,
+    _foodId:e.food_id||null
+  };
+}
+function hostOfUrl(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return 'source';}}
+
+function stapleToRow(f){
+  return {
+    id:'staple-'+f.id, name:f.name, brand:null,
+    serving:f.serving||'1 serving', per:'serving',
+    nutrients:Object.fromEntries(NUTRIENTS.map(n=>[n.k,Number(f[n.k])||0])),
+    source:'staple', sourceLabel:'Saved', sourceUrl:null,
+    _stapleId:f.id, _lastQty:1, _lastMeal:''
+  };
+}
+
 /* ============ FOOD PICKER — one search, one list ============
    Every row carries where its numbers came from. Databases answer instantly;
    brand-website and estimate tiers are fetched separately and appended as they
@@ -2232,22 +2413,36 @@ function renderFoodPicker(){
 }
 
 function fpBody(){
-  // Before searching: saved staples + recents, so the common case is one tap.
+  // Before typing: your own history. This is where most logging happens, so
+  // every row is ONE TAP to log with the servings and meal you used last time.
   if(fpState==='idle'){
+    const hist=historyItems();
+    const recent=hist.slice().sort((a,b)=>(b.last||'').localeCompare(a.last||'')).slice(0,15);
+    const recentIds=new Set(recent.map(h=>h.name.toLowerCase()));
+    const frequent=hist.filter(h=>h.count>1&&!recentIds.has(h.name.toLowerCase()))
+                       .sort((a,b)=>b.count-a.count).slice(0,10);
+    const staples=(FOODS||[]).filter(f=>!f.archived);
+
     let out='';
-    const staples=(FOODS||[]).slice(0,12);
-    if(staples.length){
-      out+=`<div class="pk-cat">Your foods</div>`;
-      out+=staples.map(f=>rowCard({
-        id:'staple-'+f.id, name:f.name, brand:null,
-        serving:f.serving||'1 serving', per:'serving',
-        nutrients:{calories:Number(f.calories)||0,protein:Number(f.protein)||0,
-                   carbs:Number(f.carbs)||0,fat:Number(f.fat)||0},
-        source:'staple', sourceLabel:'Saved', sourceUrl:null, _stapleId:f.id
-      })).join('');
-    }else{
-      out+=`<div class="pk-empty" style="font-style:normal">Search for a food to log it.</div>`;
+    if(!recent.length&&!staples.length){
+      return `<div class="pk-empty" style="font-style:normal">
+        Describe what you ate, or search for a food.
+        <div style="margin-top:14px;font-size:13px;color:var(--text3)">Once you've logged a few things they'll show up here for one-tap logging.</div>
+      </div>`;
     }
+    if(recent.length){
+      out+=`<div class="pk-cat">Recent</div>`;
+      out+=recent.map(h=>histCard(historyRow(h))).join('');
+    }
+    if(frequent.length){
+      out+=`<div class="pk-cat">Frequent</div>`;
+      out+=frequent.map(h=>histCard(historyRow(h))).join('');
+    }
+    if(staples.length){
+      out+=`<div class="pk-cat">Saved</div>`;
+      out+=staples.map(f=>histCard(stapleToRow(f))).join('');
+    }
+    out+=`<div class="fp-hint">Tap to log · press and hold to adjust first</div>`;
     return out;
   }
   if(fpState==='error')return `<div class="pk-empty">⚠ ${escHtml(fpErr||'Search failed')}
@@ -2276,6 +2471,51 @@ function fpBody(){
   return out;
 }
 
+
+/* History rows log in ONE TAP. Long-press opens the confirm sheet instead. */
+let histPressTimer=null, histLong=false;
+function histCard(r){
+  const n=r.nutrients||{};
+  const q=r._lastQty||1;
+  const meal=r._lastMeal?` · ${escHtml(r._lastMeal)}`:'';
+  HISTROWS[r.id]=r;
+  return `<button class="foodrow hist" id="hr_${r.id}"
+      onpointerdown="histPress('${r.id}')" onpointerup="histRelease('${r.id}')" onpointerleave="histCancel()">
+    <div class="fr-top">
+      <span class="fr-name">${escHtml(r.name)}</span>
+      ${srcBadge(r)}
+    </div>
+    <div class="fr-macros">${Math.round((n.calories||0)*q)} cal · ${Math.round((n.protein||0)*q)}g P · ${Math.round((n.carbs||0)*q)}g C · ${Math.round((n.fat||0)*q)}g F
+      <span class="fr-per">${q!==1?`· ${q} servings`:''}${meal}</span></div>
+  </button>`;
+}
+const HISTROWS={};
+function histPress(id){histLong=false;histCancel();histPressTimer=setTimeout(()=>{histLong=true;openHistDetail(id);},450);}
+function histRelease(id){clearTimeout(histPressTimer);if(histLong){histLong=false;return;}quickLog(id);}
+function histCancel(){clearTimeout(histPressTimer);}
+function openHistDetail(id){
+  const r=HISTROWS[id];if(!r)return;
+  fpDetail=r;fpServings=r._lastQty||1;fpMeal=fpPresetMeal||r._lastMeal||'';
+  renderFoodDetail();
+}
+// One tap: log it exactly as last time.
+async function quickLog(id){
+  const r=HISTROWS[id];if(!r)return;
+  const n=r.nutrients||{};
+  const q=r._lastQty||1;
+  const meal=fpPresetMeal||r._lastMeal||null;
+  const row={user_id:user.id,date:foodToday(),food_id:r._stapleId||r._foodId||null,
+    name:r.name,meal_slot:meal,qty:q,
+    source:r.source==='staple'?'custom':r.source,
+    confidence:confOf(r.source),source_url:r.sourceUrl||null};
+  NUTRIENTS.forEach(x=>{row[x.k]=round1((n[x.k]||0)*q);});
+  const {error}=await sb.from('food_log').insert(row);
+  if(error){toast('⚠ NOT saved: '+error.message);return;}
+  toast(`Logged ${r.name}`);
+  closeFoodPicker();
+  await loadAll();active='food';render();
+}
+
 /* one result row — the source label is the point */
 function rowCard(r){
   const n=r.nutrients||{};
@@ -2297,11 +2537,15 @@ function srcBadge(r){
     usda_branded:['conf-verified','USDA label'],
     off:['conf-off','Open Food Facts'],
     staple:['conf-staple','Saved'],
+    yours:['conf-staple','Yours'],
     web:['conf-published',r.sourceLabel||'Brand site'],
     estimate:['conf-estimated','~ Estimate'],
   };
   const [cls,label]=map[r.source]||['conf-off',r.sourceLabel||''];
-  return `<span class="conf ${cls}">${escHtml(label)}</span>`;
+  // Prefer a specific label the row carries (history rows know whether the
+  // original entry was verified, estimated, or the user's own) over the
+  // generic one keyed off source.
+  return `<span class="conf ${cls}">${escHtml(r.sourceLabel||label)}</span>`;
 }
 
 /* ---- the search itself ---- */
@@ -2689,8 +2933,10 @@ function renderStapleEditor(f){
   const vis=visibleNutrients();
   const title=stapleOneOff?'Log one-off food':(editingStapleId?'Edit staple':'Define a staple');
   let fields=vis.map(n=>`
-    <div class="field"><label>${n.label}${n.unit?` (${n.unit})`:''}</label>
-    <input type="number" inputmode="decimal" id="sf_${n.k}" value="${f[n.k]!=null?f[n.k]:''}" placeholder="—"></div>`).join('');
+    <div class="nutfield">
+      <label for="sf_${n.k}">${n.label}${n.unit?` <span class="nu">(${n.unit})</span>`:''}</label>
+      <input type="number" inputmode="decimal" id="sf_${n.k}" value="${f[n.k]!=null?f[n.k]:''}" placeholder="—">
+    </div>`).join('');
   m.innerHTML=`<div class="modal-bg" onclick="closeStapleEditor()"></div>
     <div class="modal-card">
       <div class="pk-head"><b style="font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.5px">${title}</b>
@@ -2698,7 +2944,7 @@ function renderStapleEditor(f){
       <div class="pk-list">
         <div class="profilefield"><label>Name</label><input type="text" id="sf_name" value="${(f.name||'').replace(/"/g,'&quot;')}" placeholder="e.g. PB sandwich"></div>
         <div class="profilefield"><label>Serving (optional)</label><input type="text" id="sf_serving" value="${(f.serving||'').replace(/"/g,'&quot;')}" placeholder="e.g. 2 slices + 2 tbsp PB"></div>
-        <div class="fields" style="flex-wrap:wrap">${fields}</div>
+        <div class="nutgrid">${fields}</div>
         <div class="daymeta" style="text-transform:none;letter-spacing:0;margin-top:6px">Values per serving. Add optional nutrients from Profile → nutrient options.</div>
         ${stapleOneOff
           ? `<button class="btn" onclick="saveOneOff()">Log it</button>`
