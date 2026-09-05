@@ -482,6 +482,38 @@ html.theme-dark .wm-light{display:none}
 .fdactions.sub{margin:0 0 8px}
 .fdactions.sub .btn{font-size:14px;padding:11px 8px}
 .mm-head{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text2);padding:10px 14px 6px}
+
+/* plate helper */
+.platebtn{background:var(--surface2);border:1px solid var(--line);color:var(--text2);
+  border-radius:6px;font-size:14px;line-height:1;padding:4px 8px;cursor:pointer}
+.platebtn:hover{border-color:var(--accent);color:var(--accent)}
+.plate-card{max-height:86vh}
+.pl-head{display:flex;align-items:center;gap:10px;padding:16px 16px 8px}
+.pl-title{flex:1;font-family:var(--font-display);font-size:20px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px}
+.pl-sum{font-family:var(--font-data);font-size:19px;font-weight:700;margin-bottom:2px}
+.pl-bar{display:block;font-family:var(--font-body);font-size:13px;color:var(--text2);font-weight:500;margin-top:3px}
+.pl-vis{display:flex;align-items:center;gap:3px;margin:22px 0 10px;min-height:130px}
+.pl-sleeve{width:26px;height:12px;background:var(--line);border-radius:3px;flex:0 0 auto}
+.plate{width:26px;background:var(--accent);border-radius:3px;display:flex;align-items:center;
+  justify-content:center;flex:0 0 auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.plate span{font-family:var(--font-data);font-size:11px;font-weight:700;color:var(--accent-ink);
+  writing-mode:vertical-rl;transform:rotate(180deg)}
+.plate:nth-child(even){background:color-mix(in srgb,var(--accent) 72%,var(--text))}
+.pl-barend{margin-left:6px;background:var(--surface2);border:1px solid var(--line);
+  font-family:var(--font-data);font-size:13px;font-weight:700;padding:6px 12px;border-radius:4px;color:var(--text2)}
+.pl-list{font-family:var(--font-data);font-size:16px;font-weight:700}
+.pl-list span{font-family:var(--font-body);font-size:13px;color:var(--text2);font-weight:500}
+.pl-none{font-family:var(--font-body);font-size:15px;color:var(--text2);padding:18px 0}
+.pl-short{margin-top:14px;padding:12px 14px;border-left:3px solid var(--warn);
+  background:color-mix(in srgb,var(--warn) 10%,transparent);font-size:14px;line-height:1.5;border-radius:0 8px 8px 0}
+.pl-plates{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.pl-plates-lab{font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--text2);margin-bottom:9px}
+.pl-chips{display:flex;gap:7px;flex-wrap:wrap}
+.pl-chip{background:var(--surface2);border:1px solid var(--line);color:var(--text3);
+  border-radius:var(--r-pill);font-family:var(--font-data);font-size:14px;font-weight:700;
+  padding:8px 14px;cursor:pointer}
+.pl-chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -490,7 +522,7 @@ html.theme-dark .wm-light{display:none}
     <div class="brand">
       <img class="wordmark wm-light" src="data:image/png;base64,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" alt="Forge">
       <img class="wordmark wm-dark" src="data:image/png;base64,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" alt="Forge">
-      <span class="mh">Modern Hobbit <span class="ver">v3.6.1</span></span>
+      <span class="mh">Modern Hobbit <span class="ver">v3.7.0</span></span>
     </div>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Toggle light/dark">◐</button>
   </header>
@@ -789,6 +821,112 @@ function deloadWeight(w,inc){
   let c=Math.floor(w*DELOAD/step)*step;
   if(c>=w)c=w-step;
   return Math.max(c,step);
+}
+
+
+/* ============ PLATE HELPER ============
+   Given a working weight, show what to load per side. Bar weight lives on the
+   exercise: null means the helper is off (machines, cables, dumbbells), 0 means
+   plate-loaded with no bar (the leg press), anything else is the bar itself. */
+const ALL_PLATES=[45,35,25,10,5,2.5,1.25];
+function plateSet(){
+  const p=PROFILE&&PROFILE.plate_set;
+  const arr=Array.isArray(p)?p:(typeof p==='string'?JSON.parse(p||'[]'):null);
+  return (arr&&arr.length?arr:ALL_PLATES).slice().sort((a,b)=>b-a);
+}
+function exBar(name){
+  for(const day of ['a','b','c']){
+    const ex=EX[day].find(e=>e.name===name);
+    if(ex&&ex.bar_weight!=null&&ex.bar_weight!=='')return Number(ex.bar_weight);
+  }
+  return null;
+}
+// Greedy fill from the heaviest plate down. Returns what goes on ONE side.
+function plateBreakdown(total,bar,plates){
+  const load=Number(total)-Number(bar||0);
+  if(!(load>0))return {perSide:0,plates:[],short:0,barOnly:load===0};
+  const perSide=load/2;
+  let left=perSide;
+  const out=[];
+  (plates||plateSet()).forEach(p=>{
+    while(left>=p-0.001){out.push(p);left=Math.round((left-p)*100)/100;}
+  });
+  return {perSide,plates:out,short:Math.round(left*100)/100,barOnly:false};
+}
+
+/* ---- the card ---- */
+let plateFor=null;   // {name, weight}
+function openPlateCard(name,weight){
+  const bar=exBar(name);
+  if(bar===null)return;                 // helper not enabled for this exercise
+  plateFor={name,weight:Number(weight)||0,bar};
+  renderPlateCard();
+}
+function closePlateCard(){const m=E('platecard');if(m)m.remove();}
+function renderPlateCard(){
+  let m=E('platecard');
+  if(!m){m=document.createElement('div');m.id='platecard';m.className='modal';document.body.appendChild(m);}
+  const {name,weight,bar}=plateFor;
+  const avail=plateSet();
+  const b=plateBreakdown(weight,bar,avail);
+  const barLabel=bar===0?'no bar (plate-loaded)':`${bar} lb bar`;
+
+  // Draw each plate to scale — bigger plate, taller block.
+  const maxP=Math.max(...ALL_PLATES);
+  const bars=b.plates.map(p=>{
+    const h=38+Math.round((p/maxP)*90);
+    return `<div class="plate" style="height:${h}px" title="${p} lb"><span>${p}</span></div>`;
+  }).join('');
+
+  m.innerHTML=`<div class="modal-bg" onclick="closePlateCard()"></div>
+    <div class="modal-card plate-card">
+      <div class="pl-head">
+        <div class="pl-title">${escHtml(name)}</div>
+        <button class="pk-close" onclick="closePlateCard()">✕</button>
+      </div>
+      <div class="pk-list">
+        <div class="pl-sum">${weight} lb ${b.barOnly?'· bar only':`(${trimNum(b.perSide)}/side)`}
+          <span class="pl-bar">${escHtml(barLabel)}</span></div>
+
+        ${b.plates.length?`
+          <div class="pl-vis">
+            <div class="pl-sleeve"></div>
+            ${bars}
+            ${bar>0?`<div class="pl-barend">${bar}</div>`:''}
+          </div>
+          <div class="pl-list">${b.plates.map(p=>trimNum(p)).join(' + ')} <span>per side</span></div>
+        `:`<div class="pl-none">${b.barOnly?'Just the bar.':'Nothing to load.'}</div>`}
+
+        ${b.short>0?`<div class="pl-short">Can't make this exactly — ${trimNum(b.short)} lb short per side with the plates you have.
+          Nearest loadable: <b>${trimNum(nearestLoadable(weight,bar,avail))} lb</b>.</div>`:''}
+
+        <div class="pl-plates">
+          <div class="pl-plates-lab">Plates available at your gym</div>
+          <div class="pl-chips">
+            ${ALL_PLATES.map(p=>`<button class="pl-chip ${avail.includes(p)?'on':''}"
+              onclick="togglePlate(${p})">${trimNum(p)}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function trimNum(n){return (Math.round(Number(n)*100)/100).toString().replace(/\.00?$/,'');}
+// Biggest weight <= target that can actually be loaded.
+// The greedy fill already stops at or below the per-side target, so whatever it
+// managed to stack IS the nearest loadable amount — no searching required.
+function nearestLoadable(target,bar,plates){
+  const b=plateBreakdown(target,bar,plates);
+  const loaded=b.plates.reduce((s,x)=>s+x,0);
+  return Math.round(((bar||0)+loaded*2)*100)/100;
+}
+async function togglePlate(p){
+  const cur=plateSet();
+  const next=cur.includes(p)?cur.filter(x=>x!==p):cur.concat([p]).sort((a,b)=>b-a);
+  if(!next.length){toast('Keep at least one plate');return;}
+  PROFILE.plate_set=next;
+  renderPlateCard();
+  const {error}=await sb.from('profile').update({plate_set:next}).eq('user_id',user.id);
+  if(error)toast('⚠ '+error.message);
 }
 
 /* ---- achievable weights ----
@@ -1424,7 +1562,7 @@ function dayView(day){
                <button class="ord" onclick="moveEx('${day.id}',${i},1)" aria-label="Move down" ${i===exs.length-1?'disabled':''}>↓</button>
                <button class="rmx" onclick="removeEx('${day.id}',${i})">remove</button>
              </span>`
-          : `<span class="rowctl">${badge}<button class="swapbtn" onclick="openSwap('${day.id}',${i})" title="Machine busy? Swap for this session">⇄</button><button class="skipbtn ${isSkipped(day.id,i)?'on':''}" onclick="toggleSkip('${day.id}',${i})" title="${isSkipped(day.id,i)?'Un-skip':'Skip this exercise (no strike)'}">${isSkipped(day.id,i)?'skipped':'skip'}</button></span>`}
+          : `<span class="rowctl">${exBar(ex.name)!==null?`<button class="platebtn" onclick="openPlateCard('${ex.name.replace(/'/g,"\\'")}',E('w_'+${i})?E('w_'+${i}).value:0)" title="Plate helper">▤</button>`:''}${badge}<button class="swapbtn" onclick="openSwap('${day.id}',${i})" title="Machine busy? Swap for this session">⇄</button><button class="skipbtn ${isSkipped(day.id,i)?'on':''}" onclick="toggleSkip('${day.id}',${i})" title="${isSkipped(day.id,i)?'Un-skip':'Skip this exercise (no strike)'}">${isSkipped(day.id,i)?'skipped':'skip'}</button></span>`}
       </div>
       ${editMode?`<div class="fields editcfg">
         <div class="field"><label>Increment (lbs)</label>
@@ -1435,6 +1573,16 @@ function dayView(day){
           <select id="wu_${i}" onchange="setWarmup('${day.id}',${i},this.value)">
             <option value="false" ${!ex.warmup?'selected':''}>off</option>
             <option value="true" ${ex.warmup?'selected':''}>on</option>
+          </select></div>
+        <div class="field"><label>Bar</label>
+          <select id="bar_${i}" onchange="setBar('${day.id}',${i},this.value)">
+            <option value="" ${ex.bar_weight==null?'selected':''}>Off</option>
+            <option value="0" ${Number(ex.bar_weight)===0?'selected':''}>None (plate-loaded)</option>
+            <option value="45" ${Number(ex.bar_weight)===45?'selected':''}>Olympic 45</option>
+            <option value="35" ${Number(ex.bar_weight)===35?'selected':''}>35 lb</option>
+            <option value="25" ${Number(ex.bar_weight)===25?'selected':''}>25 lb</option>
+            <option value="20" ${Number(ex.bar_weight)===20?'selected':''}>EZ / other 20</option>
+            <option value="15" ${Number(ex.bar_weight)===15?'selected':''}>EZ / other 15</option>
           </select></div>
         <div class="field"><label>Plate step</label>
           <input type="number" inputmode="decimal" id="ps_${i}" value="${ex.plate_step||''}" placeholder="—"
@@ -1479,6 +1627,17 @@ function dayView(day){
 }
 
 
+
+
+async function setBar(dayId,i,val){
+  const ex=EX[dayId][i];
+  ex.bar_weight = val===''?null:Number(val);
+  const {error}=await sb.from('exercises').update({bar_weight:ex.bar_weight}).eq('id',ex.id);
+  if(error){toast('⚠ '+error.message);return;}
+  toast(ex.bar_weight==null?'Plate helper off':
+        ex.bar_weight===0?'Plate-loaded — no bar':`${ex.bar_weight} lb bar`);
+  render();
+}
 
 async function setSteps(dayId,i,plate,aux){
   const ex=EX[dayId][i];
